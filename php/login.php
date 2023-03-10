@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('LIB.php');
+include('librairies/lib.php');
 if (isset($_POST['connexion']) && isset($_POST['login']) && isset($_POST['password'])) {
   methodeBody('login', 'password');
 }
