@@ -2,6 +2,8 @@
 session_start();
 include('librairies/lib.php');
 if (isset($_POST['connexion']) && isset($_POST['login']) && isset($_POST['password'])) {
+  // tester la validité des login/password, puis call fonction de token jwt
+  
   methodeBody('login', 'password');
 }
 ?>
