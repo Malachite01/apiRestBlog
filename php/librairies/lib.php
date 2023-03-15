@@ -34,54 +34,6 @@ function getId($id)
     return $req->fetchAll();
 }
 
-function getBySignalement()
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('select * from chuckn_facts where signalement > 0');
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    // execution de la Requête sql
-    $req->execute();
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    return $req->fetchAll();
-}
-
-function getByVote()
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('select * from chuckn_facts where vote > 3 order by vote desc');
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    // execution de la Requête sql
-    $req->execute();
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    return $req->fetchAll();
-}
-
-function getByLast10()
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('select * from chuckn_facts order by id desc limit 10');
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    // execution de la Requête sql
-    $req->execute();
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    return $req->fetchAll();
-}
-
 function getAll()
 {
     $linkpdo = connexionBd();
@@ -133,74 +85,6 @@ function put($id, $phrase)
     return getId($id);
 }
 
-function putVotePlus1($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('update chuckn_facts set vote = vote + 1 where id = :id');
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // recuperation du dernier id
-    return getId($id);
-}
-
-function putVoteMoins1($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('update chuckn_facts set vote = vote - 1 where id = :id');
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // recuperation du dernier id
-    return getId($id);
-}
-
-function putSignalementPlus1($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('update chuckn_facts set signalement = signalement + 1 where id = :id');
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // recuperation du dernier id
-    return getId($id);
-}
-
-function putSignalementMoins1($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('update chuckn_facts set signalement = signalement - 1 where id = :id');
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // recuperation du dernier id
-    return getId($id);
-}
-
 function delete($id)
 {
     $linkpdo = connexionBd();
@@ -225,7 +109,6 @@ function isConnectionValid($login, $passwd) {
         return false;
     }
 }
-
 
 function methodeBody($login, $passwd)
 {
