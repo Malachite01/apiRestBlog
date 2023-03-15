@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE HTML>
 <html lang="fr" style="font-family: Arial,sans-serif;">
 
@@ -9,7 +12,15 @@
 </head>
 
 <body>
-    <a href="login.php">Connexion</a>
+    <?php
+
+if(isset($_SESSION['token'])){
+    echo"<p>connecté</p>";
+}else{
+    echo'<a href="login.php">Connexion</a>';
+}
+?>
+
 </body>
 
 </html>
