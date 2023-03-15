@@ -233,17 +233,20 @@ function methodeBody($login, $passwd)
   $data_string = json_encode($data);
   /// Envoi de la requête
   $result = file_get_contents(
-      'http://localhost/R4.01/REST/authentification.php',
-      false,
-      stream_context_create(array(
-          'http' => array(
-              'method' => 'POST', // ou PUT
-              'content' => $data_string,
-              'header' => array('Content-Type: application/json' . "\r\n"
-                  . 'Content-Length: ' . strlen($data_string) . "\r\n")
-          )
-      ))
-  );
+    'http://localhost/R4.01/REST/authentification.php',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'POST', // ou PUT
+            'content' => $data_string,
+            'header' => array(
+                'Content-Type: application/json'."\r\n"
+                .'Content-Length:'.strlen($data_string) . "\r\n"
+            )
+        )
+    ))
+);
+
   $data = json_decode($result, true);
   if($data['data'] != false) {
     $_SESSION['token'] = $data['data'];
