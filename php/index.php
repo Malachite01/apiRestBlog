@@ -7,6 +7,7 @@ if(isset($_SESSION['token'])){
     echo'<a href="login.php">Connexion</a>';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>

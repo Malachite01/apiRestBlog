@@ -2,6 +2,9 @@
   --background-color: #f8f9fb;
   --global-radius: 5px;
   --article-background-color: #83b0e1;
+  --second-background-color: #eebbc3;
+  --second-background-color-hover: #ecd0d5;
+  --grey-font-color: #535353;
 }
 
 @font-face {
@@ -20,6 +23,71 @@ body {
   display: 	grid;
   background-color: var(--background-color);
 }
+
+/*!        ________________________           */
+/*!       |_____PAGE_DE_LOGIN_____|           */
+
+.login-page {
+  width: 50%;
+  padding: 8% 0 0;
+  margin: auto;
+  margin-top: 5%;
+}
+
+.form {
+  position: relative;
+  background: var(--article-background-color);
+  padding: 20px;
+  padding-top: 50px;
+  text-align: center;
+  border-radius: var(--global-radius);
+}
+
+.form input {
+  outline: 0;
+  background-color: #f2f2f2;
+  width: 95%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: var(--global-radius);
+  font-size: .9em;
+}
+
+.form .button {
+  margin-top: 30px;
+  outline: 0;
+  background-color: var(--second-background-color);
+  color: var(--grey-font-color);
+  padding: 15px;
+  font-size: .9em;
+  cursor: pointer;
+  width: 70%;
+}
+
+.form .button:hover {
+  background-color: var(--second-background-color-hover);
+}
+
+#lien-account {
+  width: 100%;
+  border: 0;
+  font-size: .9em;
+  cursor: pointer;
+  color: var(--grey-font-color);
+}
+
+.form .message {
+  margin: 15px 0 0;
+  color: var(--grey-font-color);
+  font-size: 12px;
+}
+
+
+
+/*!        ________________________           */
+/*!       |_____PAGE_DE_BLOG______|           */
 
 #boutonDeco {
   position: absolute;
