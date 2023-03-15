@@ -4,7 +4,7 @@ function connexionBd()
 {
     // informations de connection
     $SERVER = '127.0.0.1';
-    $DB = 'chuckn_facts';
+    $DB = 'bd_blog';
     $LOGIN = 'root';
     $MDP = '';
     // tentative de connexion à la BD
@@ -101,22 +101,41 @@ function delete($id)
 }
 
 function isConnectionValid($login, $passwd) {
-    if($login == 'admin' && $passwd == 'admin') {
-        $headers = array('alg' => 'HS256', 'typ' => 'JWT');
-        $payload = array('login' => $login, 'exp' => (time() + 60));
-        return generate_jwt($headers, $payload);
-    } else {
+    // requete sql de vérif
+    $linkpdo=connexionBd();
+
+    //todo $mdp_test = hash('sha256', "ZEN02anWobA4ve5zxzZz" . $_POST['password']);
+
+    // Je récupère les informations sur le compte de l'utilisateur
+    $query = "SELECT id_utilisateur, id_role FROM utilisateur WHERE username=:username AND password=:password";
+    $stmt = $linkpdo->prepare($query);
+    $stmt->bindParam(':username', $login, PDO::PARAM_STR);
+    $stmt->bindParam(':password', $passwd, PDO::PARAM_STR);
+    $stmt->execute();
+    // Je récupère le nombre de résultats
+    $count = $stmt->rowCount();
+    
+    if($count==1){
+      //je resupere les informations de la personne
+      $valide = $stmt->fetchAll();
+
+      $headers = array('alg' => 'HS256', 'typ' => 'JWT');
+      $payload = array('username' => $login, 'id_utilisateur'=> $valide[0][0] , 'id_role'=>$valide[0][1], 'exp' => (time() + 3600));
+      return generate_jwt($headers, $payload);
+      
+    }else {
         return false;
     }
 }
 
 function methodeBody($login, $passwd)
 {
-  $data = array("login" => $_POST[$login], "password" => $_POST[$passwd]);
+  $data = array("login" => $login,"password" => $passwd);
   $data_string = json_encode($data);
   /// Envoi de la requête
+  //var_dump($data_string);
   $result = file_get_contents(
-    'http://localhost/R4.01/REST/authentification.php',
+    'http://localhost/apiRestBlog/php/auth.php',
     false,
     stream_context_create(array(
         'http' => array(
@@ -127,13 +146,16 @@ function methodeBody($login, $passwd)
                 .'Content-Length:'.strlen($data_string) . "\r\n"
             )
         )
-    ))
+    )
+)
 );
 
   $data = json_decode($result, true);
+  //var_dump($data);
   if($data['data'] != false) {
     $_SESSION['token'] = $data['data'];
-    header('Location: client.php');
+    
+    header('Location: index.php');
   } else {
     echo '<h2 style="color: red; position: absolute; top: 10%; left: 50%; transform: translate(-50%,-50%);">Connexion échouée</h2>';
   }
