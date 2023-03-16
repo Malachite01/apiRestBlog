@@ -14,18 +14,21 @@ session_start();
 <body>
   <?php
   if(isset($_SESSION['token'])){
-    echo"<p>connecté</p>";
+    echo'<p>connecté</p>
+    <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
+    ';
   }else{
-    echo'<a href="login.php">Connexion</a>';
+    echo'
+    <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
+    ';
   }
   ?>
-  <button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button>
   <div class="article">
     <p>Test</p>
     <button type="submit" class="bouton boutonModifier" name="boutonModifier"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
     <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" onclick="return confirm('Etes vous sur de vouloir supprimer cet article ?');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
-    <button type="submit" class="bouton boutonLike" name="boutonLike"><img src="../images/like.png" alt="image de like" width="25">J'aime</button>
-    <button type="submit" class="bouton boutonDislike" name="boutonDislike"><img src="../images/like.png" alt="image de like" width="25" style="transform: rotate(180deg);">Je n'aime pas</button>
+    <button type="submit" class="bouton boutonLike" name="boutonLike"><img src="../images/like.png" alt="image de like" width="25">25</button>
+    <button type="submit" class="bouton boutonDislike" name="boutonDislike"><img src="../images/emptylike.png" alt="image de like" width="25" style="transform: rotate(180deg);">3</button>
   </div>
 </body>
 </html>

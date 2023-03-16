@@ -2,8 +2,8 @@
   --background-color: #f8f9fb;
   --global-radius: 5px;
   --article-background-color: #83b0e1;
-  --second-background-color: #eebbc3;
-  --second-background-color-hover: #ecd0d5;
+  --second-background-color: #ffd972;
+  --second-background-color-hover: #fce4a4;
   --grey-font-color: #535353;
 }
 
@@ -93,12 +93,30 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  background-color: #eebbc3;
+  background-color: var(--second-background-color);
   border: none;
   cursor: pointer;
   border-radius: var(--global-radius);
   padding: 5px;
   width: 200px;
+}
+#boutonDeco:hover {
+  background-color: var(--second-background-color-hover);
+}
+
+#boutonCo {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: var(--second-background-color);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--global-radius);
+  padding: 5px;
+  width: 200px;
+}
+#boutonCo:hover {
+  background-color: var(--second-background-color-hover);
 }
 
 .article {
@@ -110,7 +128,7 @@ body {
   padding: 25px;
   border-radius: var(--global-radius);
   padding-bottom: 130px;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
 }
 
 .article .bouton {
@@ -129,21 +147,73 @@ body {
   top: 5px;
   right: 40px;
 }
+.boutonModifier:hover::after {
+  content: "Modifier l'article";
+  position: absolute;
+  top: -22px;
+  right: 0;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: 1em;
+  padding: 2px;
+  width: 110px;
+  justify-self: center;
+}
 
 .boutonSupprimer {
   position: absolute;
   top: 5px;
   right: 0;
 }
+.boutonSupprimer:hover::after {
+  content: "Supprimer l'article";
+  position: absolute;
+  top: -22px;
+  right: 0;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: 1em;
+  padding: 2px;
+  width: 120px;
+  justify-self: center;
+}
 
 .boutonLike {
   position: absolute;
   bottom: 5px;
-  right: 120px;
+  right: 50px;
+}
+.boutonLike:hover::after {
+  content: "J'aime";
+  position: absolute;
+  top: -22px;
+  right: 0;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: 1em;
+  padding: 2px;
+  width: 60px;
+  justify-self: center;
 }
 
 .boutonDislike {
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 10px;
+}
+.boutonDislike:hover::after {
+  content: "Je n'aime pas";
+  position: absolute;
+  top: -22px;
+  right: 0;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: 1em;
+  padding: 2px;
+  width: 100px;
+  justify-self: center;
 }
