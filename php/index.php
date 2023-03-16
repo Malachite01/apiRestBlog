@@ -11,10 +11,12 @@ session_start();
   <link rel="stylesheet" href="../style/style.css">
   <title>Blog</title>
 </head>
+<script src="../js/script.js"></script>
 <body>
   <?php
   if(isset($_SESSION['token'])){
-    echo'<p>connecté</p>
+    echo'
+    <p id="nomUtilisateur">Connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     ';
   }else{
@@ -23,6 +25,16 @@ session_start();
     ';
   }
   ?>
+  <button type="button" onclick="fenOpen('aCacher'),deCache('aCacher')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>
+  <div class="aCacher fenButtonOff transparent" id="formAjoutEnfant">
+    <form method="POST">
+      <textarea name="" id="contenuArtPub"></textarea>
+      <div id="conteneurBoutonsPub">
+        <button type="button" name="boutonFermer" id="boutonFermer" onclick="fenClose('aCacher')"><img style="transform: rotate(45deg);" src="../images/plus.png" alt="icone de croix" width="25"> Annuler</button>
+        <button type="submit" name="boutonPublier" id="boutonPublier"><img src="../images/publier.png" alt="image envoi avion en papier" width="15" style="padding: 5px;">Publier</button>
+      </div>
+    </form>
+  </div>
   <div class="article">
     <p>Test</p>
     <button type="submit" class="bouton boutonModifier" name="boutonModifier"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
