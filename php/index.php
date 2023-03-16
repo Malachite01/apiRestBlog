@@ -1,11 +1,5 @@
 <?php //fichier principal de l'application
 session_start();
-
-if(isset($_SESSION['token'])){
-    echo"<p>connecté</p>";
-}else{
-    echo'<a href="login.php">Connexion</a>';
-}
 ?>
 
 <!DOCTYPE html>
@@ -18,6 +12,13 @@ if(isset($_SESSION['token'])){
   <title>Blog</title>
 </head>
 <body>
+  <?php
+  if(isset($_SESSION['token'])){
+    echo"<p>connecté</p>";
+  }else{
+    echo'<a href="login.php">Connexion</a>';
+  }
+  ?>
   <button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button>
   <div class="article">
     <p>Test</p>
