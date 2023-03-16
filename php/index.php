@@ -1,5 +1,6 @@
 <?php //fichier principal de l'application
 session_start();
+include('./librairies/jwt_utils.php');
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +23,13 @@ session_start();
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     ';
   }
+
+    // récuperer les informations de l'utilisateur depuis le token
+    $username=json_decode(jwt_decode($_SESSION['token']), true)['username'];
+    $id_utilisateur=json_decode(jwt_decode($_SESSION['token']), true)['id_utilisateur'];
+    $id_role=json_decode(jwt_decode($_SESSION['token']), true)['id_role'];
+    $exp=json_decode(jwt_decode($_SESSION['token']), true)['exp'];
+    
   ?>
   <div class="article">
     <p>Test</p>
