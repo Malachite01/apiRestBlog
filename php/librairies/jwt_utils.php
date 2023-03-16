@@ -40,6 +40,18 @@ function is_jwt_valid($jwt, $secret = 'secret') {
 	}
 }
 
+function jwt_decode($jwt, $secret='secret'){
+
+	//split the jwt
+	$tokenParts=explode('.', $jwt);
+	$payload=base64_decode($tokenParts[1]);
+
+	return $payload;
+	
+
+
+}
+
 function base64url_encode($data) {
     return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
 }
