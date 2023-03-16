@@ -15,15 +15,16 @@
   <title>Connexion</title>
 </head>
 <body>
+  <h1 class="titreLogin">Connexion</h1>
   <div class="login-page">
     <div class="form">
       <form method="POST" class="login-form">
-        <input type="text" name="login" placeholder="Adresse e-mail" />
-        <input type="password" name="password" placeholder="Mot de passe" />
+        <input maxlength="50" minlength="5" type="text" name="login" placeholder="Nom d'utilisateur" />
+        <input maxlength="50" minlength="5" type="password" name="password" placeholder="Mot de passe" />
         <input class="button" type="submit" value="CONNEXION" />
 
         <p class="message">Pas de compte ? </p>
-        <a id="lien-account" href="creation_compte.php">Créer un compte</a>
+        <a id="lien-account" href="create_user.php">Créer un compte</a>
       </form>
     </div>
   </div>

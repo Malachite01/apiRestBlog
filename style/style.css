@@ -9,6 +9,26 @@
   --grey-font-color: #535353;
 }
 
+body::-webkit-scrollbar {
+  width: 9px;
+}
+body::-webkit-scrollbar-track {
+  background: #fff;
+  margin: 5px;
+  border-radius: 5px;
+}
+body::-webkit-scrollbar-thumb {
+  background-color: var(--third-background-color);
+  border: 2px solid #fff;
+  border-radius: 50px;
+}
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--third-background-color-hover);
+}
+body::-webkit-scrollbar-thumb:active {
+  background-color: var(--second-background-color);
+}
+
 @font-face {
   src: url(fonts/proxima-nova.ttf);
   font-family: proxima;
@@ -31,9 +51,27 @@ body {
 
 .login-page {
   width: 50%;
-  padding: 8% 0 0;
   margin: auto;
-  margin-top: 5%;
+  margin-top: 200px;
+}
+
+.formCreation {
+  display: grid;
+  grid-template-columns: .25fr 1fr;
+}
+
+.formCreation label {
+  position: relative;
+  top: 12px;
+  text-align: left;
+}
+
+.titreLogin {
+  position: relative;
+  text-align: center;
+  color: var(--grey-font-color);
+  font-size: 2em;
+  bottom: -180px;
 }
 
 .form {
@@ -98,9 +136,9 @@ button > img {
 #nomUtilisateur {
   position: absolute;
   top: 10px;
-  right: 350px;
+  right: 220px;
   color: var(--grey-font-color);
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 #boutonDeco {
@@ -247,11 +285,36 @@ button > img {
   background-color: var(--article-background-color);
   width: 80%;
   justify-self: center;
-  top: 150px;
+  top: 170px;
   padding: 25px;
   border-radius: var(--global-radius);
-  padding-bottom: 130px;
+  padding-bottom: 80px;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  margin-bottom: 90px;
+}
+
+.auteurEtDateAjoutEtModif {
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  color: var(--grey-font-color);
+  font-size: .9em;
+  font-style: italic;
+  text-decoration: underline;
+}
+
+.contenuArticle {
+  width: 95%;
+}
+
+.derniereModif {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  color: var(--grey-font-color);
+  font-size: .8em;
+  font-style: italic;
+  text-decoration: underline;
 }
 
 .article .bouton {
@@ -261,7 +324,7 @@ button > img {
 }
 
 .article .bouton:hover img {
-  filter: invert(80%);
+  filter: invert(90%);
   cursor: pointer;
 }
 
@@ -283,6 +346,9 @@ button > img {
   width: 110px;
   justify-self: center;
 }
+.boutonModifier:hover img {
+  animation: poubelleAnim .6s linear infinite;
+}
 
 .boutonSupprimer {
   position: absolute;
@@ -301,6 +367,48 @@ button > img {
   padding: 2px;
   width: 120px;
   justify-self: center;
+}
+.boutonSupprimer:hover img {
+  animation: poubelleAnim .6s linear infinite;
+}
+
+@keyframes poubelleAnim {
+  0% {
+    transform: rotate(10deg);
+  }
+  10% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-10deg);
+  }
+  30% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(10deg);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  60% {
+    transform: rotate(-10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  70% {
+    transform: rotate(10deg);
+  }
+  80% {
+    transform: rotate(0deg);
+  }
+  90% {
+    transform: rotate(-10deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
 }
 
 .boutonLike {
@@ -321,11 +429,31 @@ button > img {
   width: 60px;
   justify-self: center;
 }
+.boutonLike:hover img {
+  animation: likeAnim .6s linear infinite;
+}
+@keyframes likeAnim {
+  0% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(-40deg);
+  }
+  60% {
+    transform: rotate(70deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
 
 .boutonDislike {
   position: absolute;
   bottom: 5px;
   right: 10px;
+}
+.boutonDislike img {
+  transform: rotate(180deg);
 }
 .boutonDislike:hover::after {
   content: "Je n'aime pas";
@@ -339,4 +467,21 @@ button > img {
   padding: 2px;
   width: 100px;
   justify-self: center;
+}
+.boutonDislike:hover img {
+  animation: dislikeAnim .6s linear infinite;
+}
+@keyframes dislikeAnim {
+  0% {
+    transform: rotate(180deg);
+  }
+  30% {
+    transform: rotate(220deg);
+  }
+  60% {
+    transform: rotate(170deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
 }
