@@ -25,6 +25,7 @@ include_once('./librairies/lib.php')
     echo'
     <p id="nomUtilisateur">'.$username.' connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
+    <button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>
     ';
   }else{
     echo'
@@ -36,7 +37,7 @@ include_once('./librairies/lib.php')
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->
-  <button type="button" onclick="fenOpen('aCacher'),deCache('aCacher')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>
+  
   <div class="aCacher fenButtonOff transparent" id="formAjoutEnfant">
     <form method="POST">
       <textarea name="contenuArtPub" id="contenuArtPub" minlength="15" maxlength="5000" required></textarea>
