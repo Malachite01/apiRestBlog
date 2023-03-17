@@ -161,7 +161,7 @@ if($data['data'] != false) {
 
 }
 
-function methodeBody2($token)
+function get_all_articles($token)
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php',
@@ -176,9 +176,7 @@ function methodeBody2($token)
         )   
     )
 )
-);
-  return $result;
-  
+);    
   $data = json_decode($result, true);
   //var_dump($data);
   if($data['data'] != false) {

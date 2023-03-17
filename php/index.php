@@ -33,7 +33,9 @@ include_once('./librairies/lib.php')
     ';
   }
     
-    //var_dump(methodeBody2($_SESSION['token']));
+  $article = get_all_articles($_SESSION['token'])['data'][0][3];
+
+  echo$article;
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->
