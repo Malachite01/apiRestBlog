@@ -12,7 +12,7 @@ function fenClose(aCacher) {
   aCacher1.classList.toggle('fenButtonOn');
   aCacher1.classList.add('fenButtonOff');
   var elements = document.querySelectorAll( "body > *:not(.aCacher)" );
-  Array.from( elements ).forEach( s => s.style.filter = "grayscale(0%)  blur(0px)");
+  Array.from( elements ).forEach( s => s.style = null);
   setTimeout(function(){
       aCacher1.style.display = "none";
   }, 600);

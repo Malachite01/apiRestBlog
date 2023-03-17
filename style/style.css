@@ -34,6 +34,11 @@ body::-webkit-scrollbar-thumb:active {
   font-family: proxima;
 }
 
+@font-face {
+  src: url(fonts/Hanstoc.otf);
+  font-family: hanstoc;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -48,6 +53,17 @@ body {
 
 /*!        ________________________           */
 /*!       |_____PAGE_DE_LOGIN_____|           */
+#logo {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-family: hanstoc;
+  font-size: 1.3em;
+}
+
+#conteneurArticles {
+  display: grid;
+}
 
 .login-page {
   width: 50%;
@@ -151,6 +167,7 @@ button > img {
   border-radius: var(--global-radius);
   padding: 5px;
   width: 200px;
+  z-index: 3;
 }
 #boutonDeco:hover {
   background-color: var(--second-background-color-hover);
@@ -166,6 +183,7 @@ button > img {
   border-radius: var(--global-radius);
   padding: 5px;
   width: 200px;
+  z-index: 3;
 }
 #boutonCo:hover {
   background-color: var(--second-background-color-hover);
@@ -181,6 +199,7 @@ button > img {
   width: 200px;
   justify-self: center;
   top: 110px;
+  z-index: 3;
 }
 #boutonAjout:hover {
   background-color: var(--third-background-color-hover);
@@ -207,7 +226,8 @@ button > img {
 @keyframes fenBoutonApparition {
   0% {
       clip-path: circle(0vh at center);
-
+      width: 0;
+      height: 0;
   }
   100% {
       clip-path: circle(150vh at center);
@@ -223,8 +243,8 @@ button > img {
   }
   100% {
       clip-path: circle(0vh at center);
-      width: 0%;
-      height: 0%;
+      width: 0;
+      height: 0;
   }
 }
 
