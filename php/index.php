@@ -1,6 +1,7 @@
 <?php //fichier principal de l'application
 session_start();
-include('./librairies/jwt_utils.php');
+include_once('./librairies/jwt_utils.php');
+include_once('./librairies/lib.php')
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +32,7 @@ include('./librairies/jwt_utils.php');
     ';
   }
     
+    //var_dump(methodeBody2($_SESSION['token']));
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->

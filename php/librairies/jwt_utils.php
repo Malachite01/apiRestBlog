@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 function generate_jwt($headers, $payload, $secret = 'secret') {
 	$headers_encoded = base64url_encode(json_encode($headers));
@@ -15,6 +15,8 @@ function generate_jwt($headers, $payload, $secret = 'secret') {
 
 function is_jwt_valid($jwt, $secret = 'secret') {
 	// split the jwt
+
+
 	$tokenParts = explode('.', $jwt);
 	$header = base64_decode($tokenParts[0]);
 	$payload = base64_decode($tokenParts[1]);
@@ -31,7 +33,16 @@ function is_jwt_valid($jwt, $secret = 'secret') {
 	$base64_url_signature = base64url_encode($signature);
 
 	// verify it matches the signature provided in the jwt
+	// echo$signature_provided;
+	// echo"<br></br>";
+	// echo$base64_url_signature;
+	// echo"<br></br>";
+	// echo$is_token_expired;
+	//exit();
 	$is_signature_valid = ($base64_url_signature === $signature_provided);
+
+	echo$is_token_expired;
+	//exit();	
 
 	if ($is_token_expired || !$is_signature_valid) {
 		return FALSE;
@@ -41,15 +52,11 @@ function is_jwt_valid($jwt, $secret = 'secret') {
 }
 
 function jwt_decode($jwt, $secret='secret'){
-
 	//split the jwt
 	$tokenParts=explode('.', $jwt);
 	$payload=base64_decode($tokenParts[1]);
-
-	return $payload;
 	
-
-
+	return $payload;
 }
 
 function base64url_encode($data) {
@@ -78,11 +85,13 @@ function get_authorization_header(){
 
 function get_bearer_token() {
     $headers = get_authorization_header();
+	
 
     // HEADER: Get the access token from the header
     if (!empty($headers)) {
         if (preg_match('/Bearer\s(\S+)/', $headers, $matches)) {
             return $matches[1];
+			
         }
     }
     return null;
