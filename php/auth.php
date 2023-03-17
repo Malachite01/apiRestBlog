@@ -1,6 +1,6 @@
 <?php
 /// Librairies éventuelles (pour la connexion à la BDD, etc.)
-include('librairies/lib.php');
+require_once('librairies/lib.php');
 
 /// Paramétrage de l'entête HTTP (pour la réponse au Client)
 header("Content-Type:application/json");
@@ -38,17 +38,5 @@ switch ($http_method) {
         deliver_response($RETURN_CODE, $STATUS_MESSAGE, $matchingData);
         break;
 }
-/// Envoi de la réponse au Client
-function deliver_response($status, $status_message, $data)
-{
-    /// Paramétrage de l'entête HTTP, suite
-    header("HTTP/1.1 $status $status_message");
-    /// Paramétrage de la réponse retournée
-    $response['status'] = $status;
-    $response['status_message'] = $status_message;
-    $response['data'] = $data;
-    /// Mapping de la réponse au format JSON
-    $json_response = json_encode($response);
-    echo $json_response;
-}
+
 ?>

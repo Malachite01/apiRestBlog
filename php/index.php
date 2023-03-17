@@ -1,6 +1,7 @@
 <?php //fichier principal de l'application
 session_start();
-include('./librairies/jwt_utils.php');
+include_once('./librairies/jwt_utils.php');
+include_once('./librairies/lib.php')
 ?>
 
 <!DOCTYPE html>
@@ -24,12 +25,17 @@ include('./librairies/jwt_utils.php');
     ';
   }
 
+    //echo$_SESSION['token'];
+
+    var_dump(json_decode(jwt_decode($_SESSION['token']), true));
+
     // récuperer les informations de l'utilisateur depuis le token
     $username=json_decode(jwt_decode($_SESSION['token']), true)['username'];
     $id_utilisateur=json_decode(jwt_decode($_SESSION['token']), true)['id_utilisateur'];
     $id_role=json_decode(jwt_decode($_SESSION['token']), true)['id_role'];
     $exp=json_decode(jwt_decode($_SESSION['token']), true)['exp'];
     
+    //var_dump(methodeBody2($_SESSION['token']));
   ?>
   <div class="article">
     <p>Test</p>
