@@ -25,7 +25,6 @@
   switch ($http_method){
     /// Cas de la méthode GET
     case "GET" :
-
       if(!empty($_GET["id_article"])){
         $res=api_blog_actions("recup_articles",$_GET["id_article"]);
       }else if(!empty($_GET["Id_utilisateur"])){
@@ -49,7 +48,7 @@
         $var=json_decode($postedData, 'true');
         $phrase=$var['phrase'];
 
-        $res=chuckn_facts_action('envoie',null,$phrase);
+        $res=api_blog_actions('envoie',null,$phrase);
 
         if(!$res){ 
           deliver_response(500, "messsssage" , NULL);
@@ -75,7 +74,7 @@
         $id=$_GET["id"];
         $phrase=$var['phrase'];
 
-        $res=modif('modif',$id, $phrase);
+        $res=api_blog_actions('modif',$id, $phrase);
         if(!$res){ 
           deliver_response(500, "messsssage" , NULL);
         }else{
@@ -97,7 +96,7 @@
             echo(isset($_GET["id"]));
             deliver_response(400, "id invalide" , NULL);
           }
-          $res=action('delete',$id);
+          $res=api_blog_actions('delete',$id);
           if(!$res){
             deliver_response(500,"message",NULL);
           }else{
