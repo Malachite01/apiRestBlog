@@ -28,15 +28,14 @@
 
       if(!empty($_GET["id_article"])){
         $res=api_blog_actions("recup_articles",$_GET["id_article"]);
-      }
-
-      if(!empty($_GET["Id_utilisateur"])){
+      }else if(!empty($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",$_GET["Id_utilisateur"]);
+      }else{
+        $res=api_blog_actions("recup_articles",null);
       }
       
-
       if(!$res){
-        deliver_response(500, "Erreur lors de la récupération des articles" , NULL);
+        deliver_response(500, "Erreur lors de la récupération" , NULL);
       }else{
         deliver_response(201, "Récupération réussie", $res);
       }

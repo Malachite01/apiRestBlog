@@ -124,7 +124,7 @@ function get_user($id)
         )
     )
 );
-  return json_decode($result, true);
+  return json_decode($result, true)[0][0];
 }
 
 function dislike($id_article,$token)
