@@ -101,6 +101,27 @@ function get_all_articles()
   }
 }
 
+function get_one_articles($id_article)
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
 //!  _____________________
 //! |____UTILISATEURS____|
 
