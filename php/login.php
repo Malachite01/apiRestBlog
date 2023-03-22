@@ -19,8 +19,8 @@
   <div class="login-page">
     <div class="form">
       <form method="POST" class="login-form">
-        <input maxlength="50" minlength="5" type="text" name="login" placeholder="Nom d'utilisateur" />
-        <input maxlength="50" minlength="5" type="password" name="password" placeholder="Mot de passe" />
+        <input maxlength="50" minlength="2" type="text" name="login" placeholder="Nom d'utilisateur" />
+        <input maxlength="50" minlength="2" type="password" name="password" placeholder="Mot de passe" />
         <input class="button" type="submit" value="CONNEXION" />
 
         <p class="message">Pas de compte ? </p>

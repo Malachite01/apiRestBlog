@@ -157,6 +157,16 @@ button > img {
   font-size: 1.1em;
 }
 
+#role {
+  position: absolute;
+  top: 10px;
+  left: 300px;
+  color: var(--grey-font-color);
+  font-size: .9em;
+  font-family: hanstoc;
+  text-decoration: underline;
+}
+
 #boutonDeco {
   position: absolute;
   top: 10px;

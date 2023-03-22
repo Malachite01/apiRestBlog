@@ -17,9 +17,9 @@
     <div class="form">
       <form method="POST" class="login-form">
         <div class="formCreation">
-          <label for="login">Adresse mail : </label><input maxlength="50" minlength="5" type="email" name="login" placeholder="Adresse e-mail" required/>
-          <label for="username">Nom d'utilisateur : </label><input maxlength="50" minlength="5" type="text" name="username" placeholder="Nom d'utilisateur" required/>
-          <label for="password">Mot de passe : </label><input maxlength="50" minlength="5" type="password" name="password" placeholder="Mot de passe" required/>
+          <label for="login">Adresse mail : </label><input maxlength="50" minlength="3" type="email" name="login" placeholder="Adresse e-mail" required/>
+          <label for="username">Nom d'utilisateur : </label><input maxlength="50" minlength="2" type="text" name="username" placeholder="Nom d'utilisateur" required/>
+          <label for="password">Mot de passe : </label><input maxlength="50" minlength="2" type="password" name="password" placeholder="Mot de passe" required/>
         </div>
         <input class="button" type="submit" value="CRÉER" />
       </form>
