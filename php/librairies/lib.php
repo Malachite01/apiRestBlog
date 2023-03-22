@@ -106,25 +106,19 @@ function get_all_articles()
 
 function get_user($id)
 {
-  $data = array("Id_utilisateur" => $id);
-  $data_string = json_encode($data);
   /// Envoi de la requête
   $result = file_get_contents(
-    'http://localhost/apiRestBlog/php/server.php',
+    'http://localhost/apiRestBlog/php/server.php?Id_utilisateur='.$id,
     false,
     stream_context_create(array(
         'http' => array(
             'method' => 'GET',
-            'content' => $data_string,
-            'header' => array(
-                'Content-Type: application/json'."\r\n"
-                .'Content-Length:'.strlen($data_string) . "\r\n"
-                )
+            'header' => array()
             )
         )
     )
 );
-  return json_decode($result, true)[0][0];
+  return json_decode($result, true)['data'][0][0];
 }
 
 function dislike($id_article,$token)
