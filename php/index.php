@@ -49,7 +49,7 @@ include_once('./librairies/lib.php')
   <!-- Affichage des articles -->
   <form method="POST" id="conteneurArticles">
     <?php
-      $articles = get_all_articles($_SESSION['token']);
+      $articles = get_all_articles();
       // echo $article['data'][0][3];
       foreach ($articles['data'] as $article) {
         echo '

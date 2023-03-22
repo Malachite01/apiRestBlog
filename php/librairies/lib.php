@@ -82,7 +82,7 @@ function methodeBody($login, $passwd)
 //!  _____________________
 //! |______ARTICLES______|
 
-function get_all_articles($token)
+function get_all_articles()
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php',
@@ -91,8 +91,6 @@ function get_all_articles($token)
         'http' => array(
             'method' => 'GET',
             'header' => array(
-                'Authorization: Bearer '.$token."\r\n"
-                
             )
         )   
     )

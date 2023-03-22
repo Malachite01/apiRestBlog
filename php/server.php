@@ -21,28 +21,29 @@
 
 
 
-	if(is_jwt_valid($bearer)){
-    switch ($http_method){
-      /// Cas de la méthode GET
-      case "GET" :
+	
+  switch ($http_method){
+    /// Cas de la méthode GET
+    case "GET" :
 
-        if(!empty($_GET["id_article"])){
-          $id_article = $_GET["id_article"];
-        }else{
-          $id_article=null;
-        }
+      if(!empty($_GET["id_article"])){
+        $id_article = $_GET["id_article"];
+      }else{
+        $id_article=null;
+      }
 
-        $res=api_blog_actions("recup",$id_article);
+      $res=api_blog_actions("recup",$id_article);
 
-        if(!$res){
-          deliver_response(500, "Erreur lors de la récupération des articles" , NULL);
-        }else{
-          deliver_response(201, "Récupération réussie", $res);
-        }
-        break;
+      if(!$res){
+        deliver_response(500, "Erreur lors de la récupération des articles" , NULL);
+      }else{
+        deliver_response(201, "Récupération réussie", $res);
+      }
+      break;
 
-      /// Cas de la méthode POST
-      case "POST" :
+    /// Cas de la méthode POST
+    case "POST" :
+      if(is_jwt_valid($bearer)){
         /// Récupération des données envoyées par le Client
         $postedData = file_get_contents('php://input');
         $var=json_decode($postedData, 'true');
@@ -55,11 +56,13 @@
         }else{
           deliver_response(201, "Votre message", NULL);
         }
+      }
 
-        break;
+      break;
 
-      /// Cas de la méthode PUT (modif)
-      case "PUT" :
+    /// Cas de la méthode PUT (modif)
+    case "PUT" :
+      if(is_jwt_valid($bearer)){
         /// Récupération des données envoyées par le Client
         $postedData = file_get_contents('php://input');
         $var=json_decode($postedData, 'true');
@@ -78,39 +81,35 @@
         }else{
           deliver_response(201, "Votre message", NULL);
         }
+      }
 
-        break;
+      break;
 
-      /// Cas de la méthode DELETE
-      case "DELETE" :
-        
+    /// Cas de la méthode DELETE
+    case "DELETE" :
+      if(is_jwt_valid($bearer)){
         /// Récupération de l'identifiant de la ressource envoyé par le Client
         if (!empty($_GET['mon_id'])){
 
           $id = $_GET['mon_id'];
-
+          
           if (!isset($_GET["id"])){
             echo(isset($_GET["id"]));
             deliver_response(400, "id invalide" , NULL);
           }
-
           $res=action('delete',$id);
-
           if(!$res){
             deliver_response(500,"message",NULL);
           }else{
             deliver_response(200, "Votre message", NULL);
           }
-
         }
-
-        break;
-      
-      default:
-          deliver_response(404, "Page introuvable", NULL);
-          break;
       }
-    }else{
-      echo"salut";
+
+      break;
+    
+    default:
+        deliver_response(404, "Page introuvable", NULL);
+        break;
     }
 ?>
