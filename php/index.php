@@ -16,6 +16,8 @@ include_once('./librairies/lib.php')
 <script src="../js/script.js"></script>
 <body>
   <?php
+
+
   if(isset($_SESSION['token'])){
     // récuperer les informations de l'utilisateur depuis le token
     $username=json_decode(jwt_decode($_SESSION['token']), true)['username'];
@@ -26,15 +28,32 @@ include_once('./librairies/lib.php')
     <p id="nomUtilisateur">'.$username.' connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     ';
+
+
+
+    if(isset($_POST['boutonDislike'])){
+      $id_article = $_POST['boutonDislike'];
+      //ajouter un 0 dans la bd avec le bon article et le bon user 
+      dislike($id_article,$_SESSION['token']);
+  
+    }
+
   }else{
     echo'
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     ';
-  }
-    
-  $article = get_all_articles($_SESSION['token'])['data'][0][3];
 
-  echo$article;
+    if(isset($_POST['boutonDislike'])){
+      //redirection vers la page de connexion
+      header("location:login.php");
+    }
+  }
+
+
+    
+  //$article = get_all_articles($_SESSION['token'])['data'][0][3];
+
+  //echo$article;
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->
@@ -51,6 +70,7 @@ include_once('./librairies/lib.php')
 
   <!-- Affichage des articles -->
   <form method="POST" id="conteneurArticles">
+    <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="1"><img src="../images/emptylike.png" alt="image de like" width="25">3</button>
     <div class="article">
       <!-- valeur et id de l'article à incrémenter en php, ne pas oublier de mettre l'id dans chaque bouton -->
       <input type="hidden" name="" value="">
