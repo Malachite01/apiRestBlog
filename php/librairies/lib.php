@@ -17,88 +17,6 @@ function connexionBd()
     return $linkpdo;
 }
 
-function getId($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('select * from chuckn_facts where id = :id');
-    if ($req == false) {
-        die('Erreur !');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur !');
-    }
-    return $req->fetchAll();
-}
-
-function getAll()
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('select * from chuckn_facts');
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    // execution de la Requête sql
-    $req->execute();
-    if ($req == false) {
-        die('Erreur ! GetAll');
-    }
-    return $req->fetchAll();
-}
-
-function post($phrase)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('insert into chuckn_facts (phrase,vote,date_ajout,date_modif,faute, signalement) value(:phrase,0, NOW(),NOW(),0,0)');
-    if ($req == false) {
-        die('Erreur ! Post');
-    }
-    // execution de la Requête sql
-    $req->execute(array(':phrase' => $phrase));
-    if ($req == false) {
-        die('Erreur ! Post');
-    }
-    // recuperation du dernier id
-    $lastId = $linkpdo->lastInsertId();
-    return getId($lastId);
-}
-
-function put($id, $phrase)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('update chuckn_facts set phrase = :phrase, date_modif = NOW() where id = :id');
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id, ':phrase' => $phrase));
-    if ($req == false) {
-        die('Erreur ! Put');
-    }
-    // recuperation du dernier id
-    return getId($id);
-}
-
-function delete($id)
-{
-    $linkpdo = connexionBd();
-    // preparation de la Requête sql
-    $req = $linkpdo->prepare('delete from chuckn_facts where id = :id');
-    if ($req == false) {
-        die('Erreur ! Delete');
-    }
-    // execution de la Requête sql
-    $req->execute(array('id' => $id));
-    if ($req == false) {
-        die('Erreur ! Delete');
-    }
-}
-
 function isConnectionValid($login, $passwd) {
     // requete sql de vérif
     $linkpdo=connexionBd();
@@ -149,17 +67,20 @@ function methodeBody($login, $passwd)
 )
 );
 
-$data = json_decode($result, true);
-//var_dump($data);
-if($data['data'] != false) {
-  $_SESSION['token'] = $data['data'];
-  
-  header('Location: index.php');
-} else {
-  echo '<h2 style="color: red; position: absolute; top: 10%; left: 50%; transform: translate(-50%,-50%);">Connexion échouée</h2>';
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    $_SESSION['token'] = $data['data'];
+    
+    header('Location: index.php');
+  } else {
+    echo '<h2 style="color: red; position: absolute; top: 10%; left: 50%; transform: translate(-50%,-50%);">Connexion échouée</h2>';
+  }
 }
 
-}
+
+//!  _____________________
+//! |______ARTICLES______|
 
 function get_all_articles($token)
 {
@@ -168,7 +89,33 @@ function get_all_articles($token)
     false,
     stream_context_create(array(
         'http' => array(
-            'method' => 'GET', // ou PUT
+            'method' => 'GET',
+            'header' => array(
+                'Authorization: Bearer '.$token."\r\n"
+                
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
+//!  _____________________
+//! |____UTILISATEURS____|
+
+function get_user($id, $token)
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
             'header' => array(
                 'Authorization: Bearer '.$token."\r\n"
                 

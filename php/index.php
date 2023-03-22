@@ -32,10 +32,6 @@ include_once('./librairies/lib.php')
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     ';
   }
-    
-  $article = get_all_articles($_SESSION['token'])['data'][0][3];
-
-  echo$article;
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->
@@ -52,27 +48,22 @@ include_once('./librairies/lib.php')
 
   <!-- Affichage des articles -->
   <form method="POST" id="conteneurArticles">
-    <div class="article">
-      <!-- valeur et id de l'article à incrémenter en php, ne pas oublier de mettre l'id dans chaque bouton -->
-      <input type="hidden" name="" value="">
-      <p class="auteurEtDateAjoutEtModif">Michel, le 05/02/2003 (modifié)</p>
-      <p class="contenuArticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, dicta. Impedit sunt voluptas, repellendus sint nisi consectetur quo, obcaecati consequuntur facilis a, ducimus voluptatibus quidem placeat dignissimos recusandae nam quisquam! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis accusantium mollitia tenetur vero labore adipisci obcaecati quibusdam nam laborum alias fugiat exercitationem excepturi earum dolores dolorum reprehenderit commodi, explicabo distinctio! Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi qui animi similique assumenda, ullam deleniti hic quasi aut repellat quos fugit error, laudantium quisquam deserunt consequatur odit. Itaque, harum ut.</p>
-      <button type="submit" class="bouton boutonModifier" name="boutonModifier" value=""><img src="../images/modifier.png" alt="image modifier" width="30"></button>
-      <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="" onclick="return confirm('Etes vous sur de vouloir supprimer cet article ?');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
-      <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="../images/like.png" alt="image de like" width="25">25</button>
-      <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="../images/emptylike.png" alt="image de like" width="25">3</button>
-    </div>
-
-    <div class="article">
-      <!-- valeur et id de l'article à incrémenter en php -->
-      <input type="hidden" name="" value="">
-      <p class="auteurEtDateAjoutEtModif">Michel, le 05/02/2003 (modifié)</p>
-      <p class="contenuArticle">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio, dicta. Impedit sunt voluptas, repellendus sint nisi consectetur quo, obcaecati consequuntur facilis a, ducimus voluptatibus quidem placeat dignissimos recusandae nam quisquam! Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis accusantium mollitia tenetur vero labore adipisci obcaecati quibusdam nam laborum alias fugiat exercitationem excepturi earum dolores dolorum reprehenderit commodi, explicabo distinctio! Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi qui animi similique assumenda, ullam deleniti hic quasi aut repellat quos fugit error, laudantium quisquam deserunt consequatur odit. Itaque, harum ut.</p>
-      <button type="submit" class="bouton boutonModifier" name="boutonModifier"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
-      <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" onclick="return confirm('Etes vous sur de vouloir supprimer cet article ?');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
-      <button type="submit" class="bouton boutonLike" name="boutonLike"><img src="../images/like.png" alt="image de like" width="25">25</button>
-      <button type="submit" class="bouton boutonDislike" name="boutonDislike"><img src="../images/emptylike.png" alt="image de like" width="25">3</button>
-    </div>
+    <?php
+      $articles = get_all_articles($_SESSION['token']);
+      // echo $article['data'][0][3];
+      foreach ($articles['data'] as $article) {
+        echo '
+        <div class="article">
+          <p class="auteurEtDateAjoutEtModif">'.$article[4].', le '.($article[2]==null ? date('d/m/Y', strtotime($article[1])) : date('d/m/Y', strtotime($article[2])).' (modifié)').'</p>
+          <p class="contenuArticle">&ensp;'.$article[3].'</p>
+          <button type="submit" class="bouton boutonModifier" name="boutonModifier" value="'.$article[0].'"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
+          <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="'.$article[0].'" onclick="return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
+          <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="../images/like.png" alt="image de like" width="25">25</button>
+          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="../images/emptylike.png" alt="image de like" width="25">3</button>
+        </div>
+        ';
+      }
+    ?>
 
     <div class="article">
       <!-- valeur et id de l'article à incrémenter en php -->

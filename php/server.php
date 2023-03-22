@@ -1,8 +1,7 @@
 <?php
 
 
-// traitement de toutes les requetes qu'on envoie au serveur
-
+  // traitement de toutes les requetes qu'on envoie au serveur
   include_once("./librairies/lib.php");  
 	include_once("./librairies/jwt_utils.php");
 
@@ -10,7 +9,7 @@
 	header("Content-Type:application/json");
 
 	// fonction pour la connexion à la bd
-    $linkpdo=connexionBd();
+  $linkpdo=connexionBd();
 
 	/// Identification du type de méthode HTTP envoyée par le client
 	$http_method = $_SERVER['REQUEST_METHOD'];
@@ -23,12 +22,8 @@
 
 
 	if(is_jwt_valid($bearer)){
-
-    
-
     switch ($http_method){
-      
-      /// Cas de la méthode GET (recuperation phrase)
+      /// Cas de la méthode GET
       case "GET" :
 
         if(!empty($_GET["id_article"])){
@@ -40,14 +35,13 @@
         $res=api_blog_actions("recup",$id_article);
 
         if(!$res){
-          deliver_response(500, "erreur lors de la récuperation des articles" , NULL);
+          deliver_response(500, "Erreur lors de la récupération des articles" , NULL);
         }else{
-          deliver_response(201, "recuperation réussi", $res);
+          deliver_response(201, "Récupération réussie", $res);
         }
         break;
 
-    
-      /// Cas de la méthode POST (nouvelle phrase)
+      /// Cas de la méthode POST
       case "POST" :
         /// Récupération des données envoyées par le Client
         $postedData = file_get_contents('php://input');
@@ -87,8 +81,6 @@
 
         break;
 
-
-
       /// Cas de la méthode DELETE
       case "DELETE" :
         
@@ -107,26 +99,18 @@
           if(!$res){
             deliver_response(500,"message",NULL);
           }else{
-
             deliver_response(200, "Votre message", NULL);
           }
 
         }
 
-        /// Envoi de la réponse au Client
         break;
       
       default:
           deliver_response(404, "Page introuvable", NULL);
           break;
       }
-
-
     }else{
       echo"salut";
     }
-
-
-
-
 ?>
