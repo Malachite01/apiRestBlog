@@ -16,6 +16,8 @@ include_once('./librairies/lib.php')
 <script src="../js/script.js"></script>
 <body>
   <?php
+
+
   if(isset($_SESSION['token'])){
     // récuperer les informations de l'utilisateur depuis le token
     $username=json_decode(jwt_decode($_SESSION['token']), true)['username'];
@@ -27,10 +29,25 @@ include_once('./librairies/lib.php')
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     <button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>
     ';
+
+
+
+    if(isset($_POST['boutonDislike'])){
+      $id_article = $_POST['boutonDislike'];
+      //ajouter un 0 dans la bd avec le bon article et le bon user 
+      dislike($id_article,$_SESSION['token']);
+  
+    }
+
   }else{
     echo'
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     ';
+
+    if(isset($_POST['boutonDislike'])){
+      //redirection vers la page de connexion
+      header("location:login.php");
+    }
   }
   ?>
   <h1 id="logo">API Rest Articles</h1>

@@ -129,6 +129,32 @@ function get_user($id, $token)
   }
 }
 
+function dislike($id_article,$token)
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php',// mettre l'article dans le header
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'PUT', // ou PUT
+            'header' => array(
+                'Authorization: Bearer '.$token."\r\n"
+
+                
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
+
+
 /// Envoi de la réponse au Client
 function deliver_response($status, $status_message, $data)
 {
