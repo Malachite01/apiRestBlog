@@ -95,11 +95,29 @@ function get_all_articles()
 )
 );    
   $data = json_decode($result, true);
-  //var_dump($data);
   if($data['data'] != false) {
-    return$data;
+    return $data;
   }
 }
+
+function get_avis($id)
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+            )
+        )   
+    )
+)
+);    
+    $res = json_decode($result, true)['data'][0];
+    return ($res != null ? $res : 0);
+}
+
 
 //!  _____________________
 //! |____UTILISATEURS____|

@@ -72,8 +72,8 @@ include_once('./librairies/lib.php')
           <p class="contenuArticle">&ensp;'.$article[3].'</p>
           <button type="submit" class="bouton boutonModifier" name="boutonModifier" value="'.$article[0].'"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
           <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="'.$article[0].'" onclick="return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
-          <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="../images/like.png" alt="image de like" width="25">25</button>
-          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="../images/emptylike.png" alt="image de like" width="25">3</button>
+          <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="../images/like.png" alt="image de like" width="25">'.get_avis($article[0])[0].'</button>
+          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="../images/emptylike.png" alt="image de like" width="25">'.get_avis($article[0])[1].'</button>
         </div>
         ';
       }
