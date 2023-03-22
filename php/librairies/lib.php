@@ -61,17 +61,15 @@ function methodeBody($login, $passwd)
             'header' => array(
                 'Content-Type: application/json'."\r\n"
                 .'Content-Length:'.strlen($data_string) . "\r\n"
+                )
             )
         )
     )
-)
 );
-
   $data = json_decode($result, true);
   //var_dump($data);
   if($data['data'] != false) {
-    $_SESSION['token'] = $data['data'];
-    
+    $_SESSION['token'] = $data['data'];  
     header('Location: index.php');
   } else {
     echo '<h2 style="color: red; position: absolute; top: 10%; left: 50%; transform: translate(-50%,-50%);">Connexion échouée</h2>';
@@ -106,27 +104,27 @@ function get_all_articles()
 //!  _____________________
 //! |____UTILISATEURS____|
 
-function get_user($id, $token)
+function get_user($id)
 {
+  $data = array("Id_utilisateur" => $id);
+  $data_string = json_encode($data);
+  /// Envoi de la requête
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php',
     false,
     stream_context_create(array(
         'http' => array(
             'method' => 'GET',
+            'content' => $data_string,
             'header' => array(
-                'Authorization: Bearer '.$token."\r\n"
-                
+                'Content-Type: application/json'."\r\n"
+                .'Content-Length:'.strlen($data_string) . "\r\n"
+                )
             )
-        )   
+        )
     )
-)
-);    
-  $data = json_decode($result, true);
-  //var_dump($data);
-  if($data['data'] != false) {
-    return$data;
-  }
+);
+  return json_decode($result, true);
 }
 
 function dislike($id_article,$token)
@@ -170,20 +168,25 @@ function deliver_response($status, $status_message, $data)
 }
 
 
-function api_blog_actions($action, $id_article=null, $contenu=null){
+function api_blog_actions($action, $id=null, $contenu=null){
 
     $linkpdo = connexionBd();
 
     switch ($action) {
-        case 'recup':
-            if ($id_article==null){
+        case 'recup_articles':
+            if ($id==null){
                 $req = $linkpdo->prepare('select * from article');
             }else{
                 $req = $linkpdo->prepare('select * from article where id_article =:id_article');
-                $req->bindParam('id_article', $id_article);	
+                $req->bindParam('id_article', $id);	
             }
             break;
         
+        case 'recup_utilisateur':
+                $req = $linkpdo->prepare('select username from utilisateur where Id_utilisateur =:Id_utilisateur');
+                $req->bindParam('Id_utilisateur', $id);	
+            break;
+
         case 'envoie':
             $req = $linkpdo->prepare('insert into bd_blog (contenu) values (:contenu)');
             $req->bindParam('contenu', $contenu);	
@@ -191,13 +194,13 @@ function api_blog_actions($action, $id_article=null, $contenu=null){
         
         case 'modif':
             $req = $linkpdo->prepare('update bd_blog set contenu = :contenu where id_article = :id_article');
-            $req->bindParam('id_article', $id_article);
+            $req->bindParam('id_article', $id);
             $req->bindParam('contenu', $contenu);	
             break;
        
         case 'supprime':
             $req = $linkpdo->prepare('delete from bd_blog where id_article=:id_article');
-            $req->bindParam('id_article', $id_article);
+            $req->bindParam('id_article', $id);
             break;
     
         default:
@@ -208,7 +211,7 @@ function api_blog_actions($action, $id_article=null, $contenu=null){
         return false;        
     }
     
-    if($action=='recup'){
+    if($action=='recup_articles' || $action=='recup_utilisateur'){
         return $req->fetchall();
     }
 }

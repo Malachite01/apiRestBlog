@@ -27,12 +27,13 @@
     case "GET" :
 
       if(!empty($_GET["id_article"])){
-        $id_article = $_GET["id_article"];
-      }else{
-        $id_article=null;
+        $res=api_blog_actions("recup_articles",$_GET["id_article"]);
       }
 
-      $res=api_blog_actions("recup",$id_article);
+      if(!empty($_GET["Id_utilisateur"])){
+        $res=api_blog_actions("recup_utilisateur",$_GET["Id_utilisateur"]);
+      }
+      
 
       if(!$res){
         deliver_response(500, "Erreur lors de la récupération des articles" , NULL);
