@@ -95,9 +95,8 @@
     case "DELETE" :
       if(is_jwt_valid($bearer)){
         /// Récupération de l'identifiant de la ressource envoyé par le Client
-        if (!empty($_GET['mon_id'])){
-
-          $id = $_GET['mon_id'];
+        $id="";
+        (!empty($_GET['id_article']) ? $id = $_GET['id_article'] : $id="" );
           
           if (!isset($_GET["id"])){
             echo(isset($_GET["id"]));
