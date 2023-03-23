@@ -27,7 +27,9 @@
     /// Cas de la méthode GET
     case "GET" :
       if(!empty($_GET["id_article"])){
-        $res=api_blog_actions("recup_articles",$_GET["id_article"]);
+        //$res=api_blog_actions("recup_articles",$_GET["id_article"]);
+        $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
+
       }else if(!empty($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
       }else{
@@ -95,6 +97,14 @@
     /// Cas de la méthode DELETE
     case "DELETE" :
       if(is_jwt_valid($bearer)){
+        // vérifier que c'est bien l'auteur de l'article / qu'il est modérateur
+
+        $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+        $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
+
+        $auteur_article = get_one_articles($_GET['id_article']);
+
+        if($id_role == 1 or $id_utilisateur==$auteur_article['data'][0][0]){
 
         /// Récupération de l'identifiant de la ressource envoyé par le Client
         if (!empty($_GET['id_article'])){
@@ -105,6 +115,9 @@
           }else{
             deliver_response(200, "Suppression réussie", NULL);
           }
+        }
+        }else{
+          deliver_response(403, "Permission non accordée" , NULL);
         }
       } else {
         deliver_response(401, "Token invalide" , NULL);

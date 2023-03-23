@@ -100,7 +100,7 @@ function get_all_articles()
   }
 }
 
-function get_one_articles($id_article)
+function get_one_articles($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
@@ -201,7 +201,6 @@ function avis($id_article,$token,$avis)
 }
 
 
-
 /// Envoi de la réponse au Client
 function deliver_response($status, $status_message, $data)
 {
@@ -241,6 +240,14 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
                 $req->bindParam('id_article', $id_article);	
             }
             break;
+
+        case 'recup_auteur':
+          $req=$linkpdo->prepare('
+          Select id_utilisateur
+          from article
+          where id_article = :id');
+          $req->bindParam('id',$id_article);
+          break;
         
         case 'recup_utilisateur':
             $req = $linkpdo->prepare('select username from utilisateur where Id_utilisateur =:Id_utilisateur');
@@ -282,7 +289,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
       return false;        
     }
     
-    if($action=='recup_articles' || $action=='recup_utilisateur'){
+    if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur'){
       return $req->fetchall();
     }elseif($action=='avis' || $action=='envoi' || $action='supprime'){
       return true;
