@@ -21,6 +21,7 @@
 
 
 
+
 	
   switch ($http_method){
     /// Cas de la méthode GET
@@ -94,20 +95,15 @@
     /// Cas de la méthode DELETE
     case "DELETE" :
       if(is_jwt_valid($bearer)){
-        /// Récupération de l'identifiant de la ressource envoyé par le Client
-        if (!empty($_GET['mon_id'])){
 
-          $id = $_GET['mon_id'];
+        /// Récupération de l'identifiant de la ressource envoyé par le Client
+        if (!empty($_GET['id_article'])){
           
-          if (!isset($_GET["id"])){
-            echo(isset($_GET["id"]));
-            deliver_response(400, "id invalide" , NULL);
-          }
-          $res=api_blog_actions('delete',$id);
+          $res=api_blog_actions('supprime',$_GET['id_article']);
           if(!$res){
-            deliver_response(500,"message",NULL);
+            deliver_response(500,"Suppression échouée",NULL);
           }else{
-            deliver_response(200, "Votre message", NULL);
+            deliver_response(200, "Suppression réussie", NULL);
           }
         }
       } else {

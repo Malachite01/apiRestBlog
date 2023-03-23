@@ -142,6 +142,22 @@ function publier($contenu, $token) {
 );    
 }
 
+function supprimer($id_article, $token) {
+  return file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'DELETE',
+            'header' => array(
+                'Authorization: Bearer '.$token."\r\n"
+            )
+        )   
+    )
+)
+);    
+}
+
 //!  _____________________
 //! |____UTILISATEURS____|
 
@@ -244,7 +260,8 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
             break;
        
         case 'supprime':
-            $req = $linkpdo->prepare('delete from bd_blog where id_article=:id_article');
+          // requete à changer et mettre un on cascade sur la table likes
+            $req = $linkpdo->prepare('delete from likes where id_article=:id_article; delete from bd_blog where id_article=:id_article');
             $req->bindParam('id_article', $id_article);
             break;
 
