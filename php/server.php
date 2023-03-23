@@ -75,9 +75,9 @@
 
         $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
         if(!$res){ 
-          deliver_response(500, "messsssage" , NULL);
+          deliver_response(500, "erreur pour inserer l'avis" , NULL);
         }else{
-          deliver_response(201, "Votre message", NULL);
+          deliver_response(201, "Avis pris en compte", NULL);
         }
       } else {
         deliver_response(401, "Token invalide" , NULL);

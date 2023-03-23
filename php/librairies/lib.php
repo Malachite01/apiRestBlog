@@ -166,7 +166,7 @@ function avis($id_article,$token,$avis)
 {
   $data = array("id_article" => $id_article,"id_utilisateur"=>json_decode(jwt_decode($token), true)['id_utilisateur'],"avis" => $avis);
   $data_string = json_encode($data);
-  $result = file_get_contents(
+  file_get_contents(
     'http://localhost/apiRestBlog/php/server.php',// mettre l'article dans le header
     false,
     stream_context_create(array(
@@ -177,16 +177,11 @@ function avis($id_article,$token,$avis)
                 'Authorization: Bearer '.$token."\r\n"
                 .'Content-Type: application/json'."\r\n"
                 .'Content-Length:'.strlen($data_string) . "\r\n"
-            )
-        )   
-    )
-)
+              )
+          )   
+      )
+  )
 );    
-  $data = json_decode($result, true);
-  //var_dump($data);
-  if($data['data'] != false) {
-    return$data;
-  }
 }
 
 
@@ -259,12 +254,15 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
             break;
     }
     $req->execute();
+
     if (!$req){
-        return false;        
+      return false;        
     }
     
     if($action=='recup_articles' || $action=='recup_utilisateur'){
-        return $req->fetchall();
+      return $req->fetchall();
+    }elseif($action=='avis'){
+      return true;
     }
 }
 ?>

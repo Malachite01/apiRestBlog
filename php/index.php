@@ -31,10 +31,22 @@ include_once('./librairies/lib.php')
     if($id_role != 1) {
       echo '<button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>';
     };
-    if(isset($_POST['boutonDislike'])){
-      $id_article = $_POST['boutonDislike'];
-      //ajouter un 0 dans la bd avec le bon article et le bon user 
-      dislike($id_article,$_SESSION['token']);
+    if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike'])){
+      
+      $avis=null;
+      $id_article=null;
+
+
+      if(key_exists('boutonDislike',$_POST)){
+        $avis=0;
+        $id_article=$_POST['boutonDislike'];
+      }else if(key_exists('boutonLike',$_POST)){
+        $avis=1;
+        $id_article=$_POST['boutonLike'];
+      }
+     
+      //ajouter un 0 ou un 1 dans la bd avec le bon article et le bon user 
+      avis($id_article,$_SESSION['token'],$avis);
     }
 
     if(isset($_POST['boutonPublier'])){
@@ -46,6 +58,7 @@ include_once('./librairies/lib.php')
     <p id="role">Guest</p>
     ';
     if(isset($_POST['boutonDislike'])){
+
       //redirection vers la page de connexion
       header("location:login.php");
     }
@@ -80,8 +93,10 @@ include_once('./librairies/lib.php')
           '.
             (isset($_SESSION['token']) ? ($id_utilisateur == $article[5] || $id_role == 1 ? ($id_role != 1 ? "<button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'><img src='../images/modifier.png' alt='image modifier' width='30'></button><button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" : "<button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" ) : "") : '')
           .'
-          <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
-          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
+          <button type="submit" class="bouton boutonModifier" name="boutonModifier" value="'.$article[0].'"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
+          <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="'.$article[0].'" onclick="return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
+          <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
+          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
         </div>
         ';
       }
