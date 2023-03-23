@@ -49,6 +49,7 @@ body::-webkit-scrollbar-thumb:active {
 body {
   display: 	grid;
   background-color: var(--background-color);
+  margin-bottom: 200px;
 }
 
 /*!        ________________________           */

@@ -49,12 +49,14 @@ include_once('./librairies/lib.php')
       avis($id_article,$_SESSION['token'],$avis);
     }
 
+    if(isset($_POST['boutonPublier'])){
+      publier($_POST['contenuArtPub'],$_SESSION['token']);
+    }
   }else{
     echo'
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     <p id="role">Guest</p>
     ';
-
     if(isset($_POST['boutonDislike'])){
 
       //redirection vers la page de connexion
@@ -64,8 +66,7 @@ include_once('./librairies/lib.php')
   ?>
   <h1 id="logo">API Rest Articles</h1>
   <!-- Ajouter un article -->
-  
-  <div class="aCacher fenButtonOff transparent" id="formAjoutEnfant">
+  <div class="aCacher fenButtonOff transparent">
     <form method="POST">
       <textarea name="contenuArtPub" id="contenuArtPub" minlength="15" maxlength="5000" required></textarea>
       <div id="conteneurBoutonsPub">
@@ -75,16 +76,25 @@ include_once('./librairies/lib.php')
     </form>
   </div>
 
+  <!-- Modification d'un article -->
+
   <!-- Affichage des articles -->
   <form method="POST" id="conteneurArticles">
     <?php
+      //GUEST: Un utilisateur non connecté ne peut que consulter, il sera redirigé vers la page de connexion à chaque interaction
+      //PUBLISHER: Un utilisateur connecté peut PUBLIER un article, modifier ou supprimer SES articles
+      //MODERATOR: Un modérateur connecté NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder a la liste de likes et dislikes
       $articles = get_all_articles();
-      
       foreach ($articles['data'] as $article) {
         echo '
         <div class="article">
           <p class="auteurEtDateAjoutEtModif">'.get_user($article[4]) .', le '.($article[2]==null ? date('d/m/Y', strtotime($article[1])) : date('d/m/Y', strtotime($article[2])).' (modifié)').'</p>
           <p class="contenuArticle">&ensp;'.$article[3].'</p>
+          '.
+            (isset($_SESSION['token']) ? ($id_utilisateur == $article[5] || $id_role == 1 ? ($id_role != 1 ? "<button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'><img src='../images/modifier.png' alt='image modifier' width='30'></button><button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" : "<button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" ) : "") : '')
+          .'
+          <button type="submit" class="bouton boutonLike" name="boutonLike" value=""><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
+          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value=""><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
           <button type="submit" class="bouton boutonModifier" name="boutonModifier" value="'.$article[0].'"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
           <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="'.$article[0].'" onclick="return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
           <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>

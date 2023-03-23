@@ -121,6 +121,10 @@ function get_one_articles($id_article)
   }
 }
 
+function publier($contenu, $token) {
+  
+}
+
 //!  _____________________
 //! |____UTILISATEURS____|
 
