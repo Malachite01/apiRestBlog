@@ -122,7 +122,24 @@ function get_one_articles($id_article)
 }
 
 function publier($contenu, $token) {
-  
+  $data = array("contenu" => $contenu,"id_utilisateur"=>json_decode(jwt_decode($token), true)['id_utilisateur']);
+  $data_string = json_encode($data);
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'POST',
+            'content' => $data_string,
+            'header' => array(
+                'Authorization: Bearer '.$token."\r\n"
+                .'Content-Type: application/json'."\r\n"
+                .'Content-Length:'.strlen($data_string) . "\r\n"
+            )
+        )   
+    )
+)
+);    
 }
 
 //!  _____________________
@@ -209,13 +226,14 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
             break;
         
         case 'recup_utilisateur':
-                $req = $linkpdo->prepare('select username from utilisateur where Id_utilisateur =:Id_utilisateur');
-                $req->bindParam('Id_utilisateur', $id_utilisateur);	
+            $req = $linkpdo->prepare('select username from utilisateur where Id_utilisateur =:Id_utilisateur');
+            $req->bindParam('Id_utilisateur', $id_utilisateur);	
             break;
 
-        case 'envoie':
-            $req = $linkpdo->prepare('insert into bd_blog (contenu) values (:contenu)');
+        case 'envoi':
+            $req = $linkpdo->prepare('insert into article (date_pub, contenu, Id_utilisateur) values (NOW(), :contenu, :Id_utilisateur)');
             $req->bindParam('contenu', $contenu);	
+            $req->bindParam('Id_utilisateur', $id_utilisateur);	
             break;
         
         case 'modif':
