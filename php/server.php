@@ -28,9 +28,9 @@
       if(!empty($_GET["id_article"])){
         $res=api_blog_actions("recup_articles",$_GET["id_article"]);
       }else if(!empty($_GET["Id_utilisateur"])){
-        $res=api_blog_actions("recup_utilisateur",$_GET["Id_utilisateur"]);
+        $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
       }else{
-        $res=api_blog_actions("recup_articles",null);
+        $res=api_blog_actions("recup_articles");
       }
       
       if(!$res){
@@ -64,17 +64,9 @@
       if(is_jwt_valid($bearer)){
         /// Récupération des données envoyées par le Client
         $postedData = file_get_contents('php://input');
-        $var=json_decode($postedData, 'true');
+        $var=json_decode($postedData, true);
 
-        if (!isset($_GET["id"])){
-          echo(isset($_GET["id"]));
-          deliver_response(400, "id invalide" , NULL);
-        }
-
-        $id=$_GET["id"];
-        $phrase=$var['phrase'];
-
-        $res=api_blog_actions('modif',$id, $phrase);
+        $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
         if(!$res){ 
           deliver_response(500, "messsssage" , NULL);
         }else{
