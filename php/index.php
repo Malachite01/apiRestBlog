@@ -108,7 +108,8 @@ include_once('./librairies/lib.php')
               }
             }
           }        
-          echo '<button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur && $article[5] == 1? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
+          echo '
+          <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur && $article[5] == 1? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
           <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur && $article[5] == 0 ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
         </div>
         ';
