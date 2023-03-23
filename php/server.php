@@ -69,15 +69,21 @@
     /// Cas de la méthode PUT (modif)
     case "PUT" :
       if(is_jwt_valid($bearer)){
-        /// Récupération des données envoyées par le Client
-        $postedData = file_get_contents('php://input');
-        $var=json_decode($postedData, true);
+        $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+        if($id_role != 1) {
+          /// Récupération des données envoyées par le Client
+          $postedData = file_get_contents('php://input');
+          $var=json_decode($postedData, true);
 
-        $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
-        if(!$res){ 
-          deliver_response(500, "erreur pour inserer l'avis" , NULL);
-        }else{
-          deliver_response(201, "Avis pris en compte", NULL);
+          $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
+          if(!$res){ 
+            deliver_response(500, "Erreur pour l'avis" , NULL);
+          }else{
+            deliver_response(201, "Avis pris en compte", NULL);
+          }
+        } else {
+          //Moderateur ne peut pas liker ou publier
+          deliver_response(403, "Permission non accordée" , NULL);
         }
       } else {
         deliver_response(401, "Token invalide" , NULL);

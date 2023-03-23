@@ -215,7 +215,13 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
                 GROUP BY a.Id_article, a.date_pub, a.date_mod, a.contenu;
                 ');
             }else{
-                $req = $linkpdo->prepare('select * from article where id_article =:id_article');
+                $req = $linkpdo->prepare('
+                SELECT a.Id_article, a.date_pub, a.date_mod, a.contenu, a.Id_utilisateur, SUM(CASE WHEN l.avis = 1 THEN 1 ELSE 0 END) AS num_likes, SUM(CASE WHEN l.avis = 0 THEN 1 ELSE 0 END) AS num_dislikes, l.Id_utilisateur
+                FROM article a
+                WHERE id_article =:id_article
+                LEFT JOIN likes l ON a.Id_article = l.Id_article
+                GROUP BY a.Id_article, a.date_pub, a.date_mod, a.contenu;
+                ');
                 $req->bindParam('id_article', $id_article);	
             }
             break;

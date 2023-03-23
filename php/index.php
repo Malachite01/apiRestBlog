@@ -89,14 +89,27 @@ include_once('./librairies/lib.php')
         echo '
         <div class="article">
           <p class="auteurEtDateAjoutEtModif">'.get_user($article[4]) .', le '.($article[2]==null ? date('d/m/Y', strtotime($article[1])) : date('d/m/Y', strtotime($article[2])).' (modifié)').'</p>
-          <p class="contenuArticle">&ensp;'.$article[3].'</p>
-          '.
-            (isset($_SESSION['token']) ? ($id_utilisateur == $article[5] || $id_role == 1 ? ($id_role != 1 ? "<button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'><img src='../images/modifier.png' alt='image modifier' width='30'></button><button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" : "<button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'><img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'></button>" ) : "") : '')
-          .'
-          <button type="submit" class="bouton boutonModifier" name="boutonModifier" value="'.$article[0].'"><img src="../images/modifier.png" alt="image modifier" width="30"></button>
-          <button type="submit" class="bouton boutonSupprimer" name="boutonSupprimer" value="'.$article[0].'" onclick="return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');"><img src="../images/supprimer.png" alt="image supprimer" width="25" style="padding: 2.5px;"></button>
-          <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
-          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
+          <p class="contenuArticle">&ensp;'.$article[3].'</p>';
+          if(isset($_SESSION['token'])) {
+            if($id_utilisateur == $article[4] || $id_role == 1) {
+              if($id_role != 1) {
+                echo "
+                <button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'>
+                  <img src='../images/modifier.png' alt='image modifier' width='30'>
+                </button>
+                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'>
+                  <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
+                </button>";
+              } else {
+                echo "
+                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'>
+                  <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
+                </button>";
+              }
+            }
+          }        
+          echo '<button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur && $article[5] == 1? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
+          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur && $article[5] == 0 ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
         </div>
         ';
       }
