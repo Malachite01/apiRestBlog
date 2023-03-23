@@ -142,22 +142,6 @@ function publier($contenu, $token) {
 );    
 }
 
-function supprimer($id_article, $token) {
-  return file_get_contents(
-    'http://localhost/apiRestBlog/php/server.php'.$id_article,
-    false,
-    stream_context_create(array(
-        'http' => array(
-            'method' => 'POST',
-            'header' => array(
-                'Authorization: Bearer '.$token."\r\n"
-            )
-        )   
-    )
-)
-);    
-}
-
 //!  _____________________
 //! |____UTILISATEURS____|
 
@@ -199,8 +183,6 @@ function avis($id_article,$token,$avis)
   )
 );    
 }
-
-
 
 
 
