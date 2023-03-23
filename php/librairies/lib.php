@@ -261,7 +261,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
     
     if($action=='recup_articles' || $action=='recup_utilisateur'){
       return $req->fetchall();
-    }elseif($action=='avis'){
+    }elseif($action=='avis' || $action=='envoi'){
       return true;
     }
 }
