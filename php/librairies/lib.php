@@ -261,7 +261,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
        
         case 'supprime':
           // requete à changer et mettre un on cascade sur la table likes
-            $req = $linkpdo->prepare('delete from likes where id_article=:id_article; delete from bd_blog where id_article=:id_article');
+            $req = $linkpdo->prepare('delete from likes where id_article= :id_article ; delete from article where id_article= :id_article ');
             $req->bindParam('id_article', $id_article);
             break;
 
@@ -284,7 +284,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
     
     if($action=='recup_articles' || $action=='recup_utilisateur'){
       return $req->fetchall();
-    }elseif($action=='avis' || $action=='envoi'){
+    }elseif($action=='avis' || $action=='envoi' || $action='supprime'){
       return true;
     }
 }
