@@ -145,18 +145,21 @@ function get_user($id)
   return json_decode($result, true)['data'][0][0];
 }
 
-function dislike($id_article,$token)
+function avis($id_article,$token,$avis)
 {
+  $data = array("id_article" => $id_article,"id_utilisateur"=>json_decode(jwt_decode($token), true)['id_utilisateur'],"avis" => $avis);
+  $data_string = json_encode($data);
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php',// mettre l'article dans le header
     false,
     stream_context_create(array(
         'http' => array(
             'method' => 'PUT', // ou PUT
+            'content' => $data_string,
             'header' => array(
                 'Authorization: Bearer '.$token."\r\n"
-
-                
+                .'Content-Type: application/json'."\r\n"
+                .'Content-Length:'.strlen($data_string) . "\r\n"
             )
         )   
     )
@@ -186,13 +189,13 @@ function deliver_response($status, $status_message, $data)
 }
 
 
-function api_blog_actions($action, $id=null, $contenu=null){
+function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis=null,$contenu=null){
 
     $linkpdo = connexionBd();
 
     switch ($action) {
         case 'recup_articles':
-            if ($id==null){
+            if ($id_article==null){
                 $req = $linkpdo->prepare('
                 SELECT a.Id_article, a.date_pub, a.date_mod, a.contenu, a.Id_utilisateur, SUM(CASE WHEN l.avis = 1 THEN 1 ELSE 0 END) AS num_likes, SUM(CASE WHEN l.avis = 0 THEN 1 ELSE 0 END) AS num_dislikes, l.Id_utilisateur
                 FROM article a
@@ -201,13 +204,13 @@ function api_blog_actions($action, $id=null, $contenu=null){
                 ');
             }else{
                 $req = $linkpdo->prepare('select * from article where id_article =:id_article');
-                $req->bindParam('id_article', $id);	
+                $req->bindParam('id_article', $id_article);	
             }
             break;
         
         case 'recup_utilisateur':
                 $req = $linkpdo->prepare('select username from utilisateur where Id_utilisateur =:Id_utilisateur');
-                $req->bindParam('Id_utilisateur', $id);	
+                $req->bindParam('Id_utilisateur', $id_utilisateur);	
             break;
 
         case 'envoie':
@@ -217,14 +220,22 @@ function api_blog_actions($action, $id=null, $contenu=null){
         
         case 'modif':
             $req = $linkpdo->prepare('update bd_blog set contenu = :contenu where id_article = :id_article');
-            $req->bindParam('id_article', $id);
+            $req->bindParam('id_article', $id_article);
             $req->bindParam('contenu', $contenu);	
             break;
        
         case 'supprime':
             $req = $linkpdo->prepare('delete from bd_blog where id_article=:id_article');
-            $req->bindParam('id_article', $id);
+            $req->bindParam('id_article', $id_article);
             break;
+
+        case 'avis':
+          $req = $linkpdo->prepare("replace INTO `likes`(`Id_article`, `Id_utilisateur`, `avis`) VALUES (:id_article,:id_utilisateur,:avis)");
+          $req->bindParam('id_article', $id_article);
+          $req->bindParam('id_utilisateur', $id_utilisateur);
+          $req->bindParam('avis', $avis);
+          break;
+          
     
         default:
             break;
