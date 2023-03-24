@@ -52,6 +52,11 @@ include_once('./librairies/lib.php')
     if(isset($_POST['boutonPublier'])){
       publier($_POST['contenuArtPub'],$_SESSION['token']);
     }
+
+    if(isset($_POST['boutonSupprimer'])){
+      supprimer($_POST['boutonSupprimer'],$_SESSION['token']);
+    }
+
   }else{
     echo'
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
