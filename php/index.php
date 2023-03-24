@@ -102,12 +102,12 @@ include_once('./librairies/lib.php')
                 <button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'>
                   <img src='../images/modifier.png' alt='image modifier' width='30'>
                 </button>
-                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'>
+                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
                   <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
                 </button>";
               } else {
                 echo "
-                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick='return confirm(\'Etes vous sur de vouloir supprimer cet article ?\');'>
+                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
                   <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
                 </button>";
               }
