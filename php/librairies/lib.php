@@ -269,6 +269,14 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
           $req->bindParam('id',$id_article);
           break;
 
+        case 'recup_un_article':
+          $req=$linkpdo->prepare('
+          SELECT *
+          FROM `article` 
+          WHERE id_article=:id;');
+          $req->bindParam('id',$id_article);
+          break;
+
         case 'recup_auteur':
           $req=$linkpdo->prepare('
           Select id_utilisateur
@@ -317,7 +325,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
       return false;        
     }
     
-    if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur' || $action=='recup_likes'){
+    if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur' || $action=='recup_likes' || $action=='recup_un_article'){
       return $req->fetchall();
     }elseif($action=='avis' || $action=='envoi' || $action='supprime'){
       return true;

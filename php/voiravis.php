@@ -30,8 +30,9 @@ include_once('./librairies/lib.php')
     <p id="role">'.($id_role == 1 ? "Moderator" : "Publisher").'</p>';
 
     if($id_role==1){
-      if(isset($_GET['id_article'])){
-        $var = get_utilisateur_avis($_GET['id_article'],$_SESSION['token']);
+      if(isset($_GET['article'])){
+        $var = get_utilisateur_avis($_GET['article'],$_SESSION['token']);
+        var_dump($var);
       }
     }
 
