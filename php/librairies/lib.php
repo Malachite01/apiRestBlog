@@ -178,6 +178,26 @@ function get_user($id)
   return json_decode($result, true)['data'][0][0];
 }
 
+
+function get_likes($id,$token)
+{
+  /// Envoi de la requête
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?Id_utilisateur='.$id,
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+              'Authorization: Bearer '.$token."\r\n"
+            )
+            )
+        )
+    )
+);
+  return json_decode($result, true)['data'][0][0];
+}
+
 function avis($id_article,$token,$avis)
 {
   $data = array("id_article" => $id_article,"id_utilisateur"=>json_decode(jwt_decode($token), true)['id_utilisateur'],"avis" => $avis);
@@ -241,6 +261,14 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
             }
             break;
 
+        case 'recup_likes':
+          $req=$linkpdo->prepare('
+          SELECT username
+          FROM `likes` natural join `utilisateur` 
+          WHERE id_article=:id;');
+          $req->bindParam('id',$id_article);
+          break;
+
         case 'recup_auteur':
           $req=$linkpdo->prepare('
           Select id_utilisateur
@@ -289,7 +317,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
       return false;        
     }
     
-    if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur'){
+    if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur' || $action=='recup_likes'){
       return $req->fetchall();
     }elseif($action=='avis' || $action=='envoi' || $action='supprime'){
       return true;
