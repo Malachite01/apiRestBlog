@@ -26,9 +26,20 @@
   switch ($http_method){
     /// Cas de la méthode GET
     case "GET" :
+
       if(!empty($_GET["id_article"])){
-        //$res=api_blog_actions("recup_articles",$_GET["id_article"]);
-        $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
+        if(!empty($_GET['params'])){
+          //faire la verif token
+          if(is_jwt_valid($bearer)){
+            //les likes
+            $res=api_blog_actions("recup_likes",$_GET["id_article"]);
+          }else{
+            deliver_response(403, "Permission non accordée" , NULL);
+          }
+        }else{
+          //$res=api_blog_actions("recup_articles",$_GET["id_article"]);
+          $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
+        }
 
       }else if(!empty($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
@@ -91,7 +102,6 @@
       } else {
         deliver_response(401, "Token invalide" , NULL);
       }
-
       break;
 
     /// Cas de la méthode DELETE
