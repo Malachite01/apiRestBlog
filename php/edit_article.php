@@ -37,11 +37,11 @@ include_once('./librairies/lib.php')
   <?php
   if(isset($_POST['boutonModifier'])) {
     $id_article = $_POST['boutonModifier'];
-    $data = get_one_article($id_article);
+    $data = get_un_article($id_article);
     echo '
     <div style="z-index: 3;">
       <form method="POST">
-        <textarea name="contenuArtMod" id="contenuArtPub" minlength="15" maxlength="5000" required>'."test".'</textarea>
+        <textarea name="contenuArtMod" id="contenuArtPub" minlength="15" maxlength="5000" required>'.$data['data'][0][3].'</textarea>
         <div id="conteneurBoutonsPub">
           <a href="index.php"><button type="button" name="boutonAnnuler" id="boutonFermer"><img style="transform: rotate(45deg);" src="../images/plus.png" alt="icone de croix" width="25"> Annuler</button></a>
           <button type="submit" name="boutonValiderModifier" id="boutonValiderModifier" formaction="index.php"><img src="../images/modifier.png" alt="image envoi avion en papier" width="20" style="padding: 2.5px;"> Modifier</button>

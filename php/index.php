@@ -64,7 +64,7 @@ include_once('./librairies/lib.php')
 
     // Modification d'un article dans edit, validation modif ici
     if(isset($_POST['boutonValiderModifier'])){
-      modifier($_POST['contenuArtMod'],$_POST['boutonValiderModifier'],$_SESSION['token']);
+      modifier_article($_POST['contenuArtMod'],$_POST['boutonValiderModifier'],$_SESSION['token']);
     }
 
     if(isset($_POST['boutonSupprimer'])){

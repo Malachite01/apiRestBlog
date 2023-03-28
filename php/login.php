@@ -2,7 +2,7 @@
   session_start();
   include_once('librairies/lib.php');
   if (isset($_POST['login']) && isset($_POST['password'])) {
-    methodeBody($_POST['login'],$_POST['password']);
+    connexion($_POST['login'],$_POST['password']);
   }
 ?>
 

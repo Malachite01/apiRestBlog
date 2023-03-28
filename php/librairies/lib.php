@@ -45,7 +45,7 @@ function isConnectionValid($login, $passwd) {
     }
 }
 
-function methodeBody($login, $passwd)
+function connexion($login, $passwd)
 {
   $data = array("login" => $login,"password" => $passwd);
   $data_string = json_encode($data);
@@ -100,10 +100,31 @@ function get_all_articles()
   }
 }
 
-function get_one_article($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
+function get_un_article($id_article)
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
+function get_id_auteur_article($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article.'&params=auteur',
     false,
     stream_context_create(array(
         'http' => array(
@@ -142,15 +163,20 @@ function publier($contenu, $token) {
 );    
 }
 
-function modifier($id_article, $token) {
-  return file_get_contents(
-    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
+function modifier_article($contenu, $id_article, $token) {
+  $data = array("contenu" => $contenu, "id_article" => $id_article);
+  $data_string = json_encode($data);
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php',
     false,
     stream_context_create(array(
         'http' => array(
-            'method' => '',
+            'method' => 'PUT',
+            'content' => $data_string,
             'header' => array(
                 'Authorization: Bearer '.$token."\r\n"
+                .'Content-Type: application/json'."\r\n"
+                .'Content-Length:'.strlen($data_string) . "\r\n"
             )
         )   
     )
@@ -312,8 +338,8 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
             $req->bindParam('Id_utilisateur', $id_utilisateur);	
             break;
         
-        case 'modif':
-            $req = $linkpdo->prepare('update bd_blog set contenu = :contenu where id_article = :id_article');
+        case 'modifier_article':
+            $req = $linkpdo->prepare('update article set contenu = :contenu, date_mod = NOW() where id_article = :id_article');
             $req->bindParam('id_article', $id_article);
             $req->bindParam('contenu', $contenu);	
             break;
@@ -343,7 +369,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
     
     if($action=='recup_articles' || $action=='recup_utilisateur'||  $action=='recup_auteur' || $action=='recup_likes' || $action=='recup_un_article'){
       return $req->fetchall();
-    }elseif($action=='avis' || $action=='envoi' || $action='supprime'){
+    }elseif($action=='avis' || $action=='envoi' || $action='supprime' || $action='modifier_article'){
       return true;
     }
 }

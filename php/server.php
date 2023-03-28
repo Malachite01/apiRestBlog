@@ -37,10 +37,9 @@
             deliver_response(403, "Permission non accordée" , NULL);
           }
         }else{
-          if(!empty($_GET['params'])){
-          //recup tout
-          $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
-
+          if(empty($_GET['params'])){
+            //recup tout
+            $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
           }else{
             //recup que l'auteur
             $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
@@ -90,19 +89,35 @@
       case "PUT" :
         if(is_jwt_valid($bearer)){
           $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+          //Si on n'est pas un modérateur
           if($id_role != 1) {
             /// Récupération des données envoyées par le Client
             $postedData = file_get_contents('php://input');
             $var=json_decode($postedData, true);
             
-            $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
-            if(!$res){ 
-              deliver_response(500, "Erreur pour l'avis" , NULL);
-            }else{
-              deliver_response(201, "Avis pris en compte", NULL);
+            if(isset($var['contenu'])) {
+              $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
+              var_dump($id_utilisateur . " et " . get_id_auteur_article($var['id_article'])['data'][0][0]);
+              if($id_utilisateur == get_id_auteur_article($var['id_article'])['data'][0][0]) {
+                $res=api_blog_actions('modifier_article',$var['id_article'], null, null, $var['contenu']);
+                if(!$res){ 
+                  deliver_response(500, "Erreur pour la modification de l'article" , NULL);
+                }else{
+                  deliver_response(201, "Article modifié", NULL);
+                }              
+              } else {
+                deliver_response(403, "Permission non accordée, vous n'êtes pas l'auteur de cette publication." , NULL);
+              }
+            } else {
+              $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
+              if(!$res){ 
+                deliver_response(500, "Erreur pour l'avis" , NULL);
+              }else{
+                deliver_response(201, "Avis pris en compte", NULL);
+              }
             }
           } else {
-            //Moderateur ne peut pas liker ou publier
+            //Moderateur ne peut pas liker ou publier ou modifier
             deliver_response(403, "Permission non accordée" , NULL);
           }
         } else {
@@ -115,29 +130,29 @@
           if(is_jwt_valid($bearer)){
             // vérifier que c'est bien l'auteur de l'article / qu'il est modérateur
 
-        $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
-        $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
+            $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+            $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
 
-        $auteur_article = get_one_article($_GET['id_article']);
+            $auteur_article = get_id_auteur_article($_GET['id_article']);
         
-        if($id_role == 1 or $id_utilisateur==$auteur_article['data'][0][0]){
-          
-          /// Récupération de l'identifiant de la ressource envoyé par le Client
-          if (!empty($_GET['id_article'])){
-            
-            $res=api_blog_actions('supprime',$_GET['id_article']);
-            if(!$res){
-              deliver_response(500,"Suppression échouée",NULL);
+            if($id_role == 1 || $id_utilisateur==$auteur_article['data'][0][0]){
+              
+              /// Récupération de l'identifiant de la ressource envoyé par le Client
+              if (!empty($_GET['id_article'])){
+                
+                $res=api_blog_actions('supprime',$_GET['id_article']);
+                if(!$res){
+                  deliver_response(500,"Suppression échouée",NULL);
+                }else{
+                  deliver_response(200, "Suppression réussie", NULL);
+                }
+              }
             }else{
-              deliver_response(200, "Suppression réussie", NULL);
+              deliver_response(403, "Permission non accordée" , NULL);
             }
+          } else {
+            deliver_response(401, "Token invalide" , NULL);
           }
-        }else{
-          deliver_response(403, "Permission non accordée" , NULL);
-        }
-      } else {
-        deliver_response(401, "Token invalide" , NULL);
-      }
       
       break;
       
