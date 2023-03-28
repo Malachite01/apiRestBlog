@@ -31,7 +31,6 @@
         if(!empty($_GET['params'])){
           //faire la verif token
           if(is_jwt_valid($bearer)){
-            //les likes
             $res=api_blog_actions("recup_likes",$_GET["id_article"]);
           }else{
             deliver_response(403, "Permission non accordée" , NULL);
@@ -40,7 +39,6 @@
           if(!empty($_GET['params'])){
           //recup tout
           $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
-
           }else{
             //recup que l'auteur
             $res=api_blog_actions("recup_auteur",$_GET["id_article"]);

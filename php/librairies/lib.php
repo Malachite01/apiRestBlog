@@ -199,7 +199,7 @@ function get_utilisateur_avis($id,$token)
 {
   /// Envoi de la requête
   $result = file_get_contents(
-    'http://localhost/apiRestBlog/php/server.php?Id_utilisateur='.$id,
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id.'&params=avis',
     false,
     stream_context_create(array(
         'http' => array(
