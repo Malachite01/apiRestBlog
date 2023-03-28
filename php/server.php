@@ -37,10 +37,16 @@
             deliver_response(403, "Permission non accordée" , NULL);
           }
         }else{
-          //$res=api_blog_actions("recup_articles",$_GET["id_article"]);
-          $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
-        }
+          if(!empty($_GET['params'])){
+          //recup tout
+          $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
 
+          }else{
+            //recup que l'auteur
+            $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
+          }
+        }
+        
       }else if(!empty($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
       }else{
@@ -53,20 +59,20 @@
         deliver_response(201, "Récupération réussie", $res);
       }
       break;
-
-    /// Cas de la méthode POST
-    case "POST" :
-      if(is_jwt_valid($bearer)){
-        $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
-        if($id_role != 1) {
-          /// Récupération des données envoyées par le Client
-          $postedData = file_get_contents('php://input');
-          $var=json_decode($postedData, 'true');
-  
-          $res=api_blog_actions('envoi',null,$var['id_utilisateur'],null,$var['contenu']);
-  
-          if(!$res){ 
-            deliver_response(500, "Votre publication n'a pas pu être postée" , NULL);
+      
+      /// Cas de la méthode POST
+      case "POST" :
+        if(is_jwt_valid($bearer)){
+          $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+          if($id_role != 1) {
+            /// Récupération des données envoyées par le Client
+            $postedData = file_get_contents('php://input');
+            $var=json_decode($postedData, 'true');
+            
+            $res=api_blog_actions('envoi',null,$var['id_utilisateur'],null,$var['contenu']);
+            
+            if(!$res){ 
+              deliver_response(500, "Votre publication n'a pas pu être postée" , NULL);
           }else{
             deliver_response(201, "Votre publication a été postée", NULL);
           }
@@ -77,66 +83,66 @@
       } else {
         deliver_response(401, "Token invalide" , NULL);
       }
-
+      
       break;
-
-    /// Cas de la méthode PUT (modif)
-    case "PUT" :
-      if(is_jwt_valid($bearer)){
-        $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
-        if($id_role != 1) {
-          /// Récupération des données envoyées par le Client
-          $postedData = file_get_contents('php://input');
-          $var=json_decode($postedData, true);
-
-          $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
-          if(!$res){ 
-            deliver_response(500, "Erreur pour l'avis" , NULL);
-          }else{
-            deliver_response(201, "Avis pris en compte", NULL);
+      
+      /// Cas de la méthode PUT (modif)
+      case "PUT" :
+        if(is_jwt_valid($bearer)){
+          $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
+          if($id_role != 1) {
+            /// Récupération des données envoyées par le Client
+            $postedData = file_get_contents('php://input');
+            $var=json_decode($postedData, true);
+            
+            $res=api_blog_actions('avis',$var['id_article'], $var['id_utilisateur'],$var['avis'],null);
+            if(!$res){ 
+              deliver_response(500, "Erreur pour l'avis" , NULL);
+            }else{
+              deliver_response(201, "Avis pris en compte", NULL);
+            }
+          } else {
+            //Moderateur ne peut pas liker ou publier
+            deliver_response(403, "Permission non accordée" , NULL);
           }
         } else {
-          //Moderateur ne peut pas liker ou publier
-          deliver_response(403, "Permission non accordée" , NULL);
+          deliver_response(401, "Token invalide" , NULL);
         }
-      } else {
-        deliver_response(401, "Token invalide" , NULL);
-      }
-      break;
-
-    /// Cas de la méthode DELETE
-    case "DELETE" :
-      if(is_jwt_valid($bearer)){
-        // vérifier que c'est bien l'auteur de l'article / qu'il est modérateur
+        break;
+        
+        /// Cas de la méthode DELETE
+        case "DELETE" :
+          if(is_jwt_valid($bearer)){
+            // vérifier que c'est bien l'auteur de l'article / qu'il est modérateur
 
         $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
         $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
 
-        $auteur_article = get_one_article($_GET['id_article']);
-
+        $auteur_article = get_one_articles($_GET['id_article']);
+        
         if($id_role == 1 or $id_utilisateur==$auteur_article['data'][0][0]){
-
-        /// Récupération de l'identifiant de la ressource envoyé par le Client
-        if (!empty($_GET['id_article'])){
           
-          $res=api_blog_actions('supprime',$_GET['id_article']);
-          if(!$res){
-            deliver_response(500,"Suppression échouée",NULL);
-          }else{
-            deliver_response(200, "Suppression réussie", NULL);
+          /// Récupération de l'identifiant de la ressource envoyé par le Client
+          if (!empty($_GET['id_article'])){
+            
+            $res=api_blog_actions('supprime',$_GET['id_article']);
+            if(!$res){
+              deliver_response(500,"Suppression échouée",NULL);
+            }else{
+              deliver_response(200, "Suppression réussie", NULL);
+            }
           }
-        }
         }else{
           deliver_response(403, "Permission non accordée" , NULL);
         }
       } else {
         deliver_response(401, "Token invalide" , NULL);
       }
-
+      
       break;
-    
-    default:
-        deliver_response(404, "Introuvable", NULL);
-        break;
+      
+      default:
+      deliver_response(404, "Introuvable", NULL);
+      break;
     }
-?>
+    ?>

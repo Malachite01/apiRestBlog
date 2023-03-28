@@ -29,6 +29,13 @@ include_once('./librairies/lib.php')
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     <p id="role">'.($id_role == 1 ? "Moderator" : "Publisher").'</p>';
 
+    if($id_role==1){
+      if(isset($_GET['article'])){
+        $var = get_utilisateur_avis($_GET['article'],$_SESSION['token']);
+        var_dump($var);
+      }
+    }
+
   }
   ?>
   <h1 id="logo">API Rest Articles</h1>

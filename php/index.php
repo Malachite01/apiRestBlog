@@ -31,19 +31,31 @@ include_once('./librairies/lib.php')
     if($id_role != 1) {
       echo '<button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>';
     };
-    if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike'])){
+    if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike'])){    
       $avis=null;
       $id_article=null;
 
       if(key_exists('boutonDislike',$_POST)){
         $avis=0;
         $id_article=$_POST['boutonDislike'];
+
+        if($id_role==1){
+          header("location: voiravis.php?article=".$id_article);
+        }
       }else if(key_exists('boutonLike',$_POST)){
+
         $avis=1;
         $id_article=$_POST['boutonLike'];
+
+        if($id_role==1){
+          header("location: voiravis.php?article=".$id_article);
+        }
+
       }
       //ajouter un 0 ou un 1 dans la bd avec le bon article et le bon user 
-      avis($id_article,$_SESSION['token'],$avis);
+      if($id_role!=1){
+        avis($id_article,$_SESSION['token'],$avis);
+      }
     }
 
     if(isset($_POST['boutonPublier'])){
@@ -111,7 +123,8 @@ include_once('./librairies/lib.php')
                 </button>";
               }
             }
-          }      
+          }
+
           echo '
           <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
           <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
