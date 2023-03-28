@@ -32,10 +32,8 @@ include_once('./librairies/lib.php')
       echo '<button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>';
     };
     if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike'])){
-      
       $avis=null;
       $id_article=null;
-
 
       if(key_exists('boutonDislike',$_POST)){
         $avis=0;
@@ -44,7 +42,6 @@ include_once('./librairies/lib.php')
         $avis=1;
         $id_article=$_POST['boutonLike'];
       }
-     
       //ajouter un 0 ou un 1 dans la bd avec le bon article et le bon user 
       avis($id_article,$_SESSION['token'],$avis);
     }
@@ -62,8 +59,7 @@ include_once('./librairies/lib.php')
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
     <p id="role">Guest</p>
     ';
-    if(isset($_POST['boutonDislike'])){
-
+    if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike']) || isset($_POST['boutonPublier']) || isset($_POST['boutonSupprimer'])){
       //redirection vers la page de connexion
       header("location:login.php");
     }

@@ -6,6 +6,7 @@
   --second-background-color-hover: #fce4a4;
   --third-background-color: #ff8ba7;
   --third-background-color-hover: #f5a8ba;
+  --avis-background-color: #86c3e6;
   --grey-font-color: #535353;
 }
 
@@ -515,4 +516,32 @@ button > img {
   100% {
     transform: rotate(180deg);
   }
+}
+
+/*!        ________________________           */
+/*!       |_____PAGE_D'AVIS_______|           */
+
+.unePersonne {
+  position: relative;
+  background-color: var(--avis-background-color);
+  width: 100%;
+  justify-self: center;
+  padding: 15px;
+  border-radius: var(--global-radius);
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  margin-bottom: 10px;
+}
+
+.conteneurAvis {
+  position: relative;
+  background-color: var(--article-background-color);
+  width: 80%;
+  justify-self: center;
+  top: 170px;
+  padding: 25px;
+  padding-top: 50px;
+  border-radius: var(--global-radius);
+  padding-bottom: 80px;
+  box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
+  margin-bottom: 90px;
 }
