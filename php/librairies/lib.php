@@ -179,7 +179,7 @@ function get_user($id)
 }
 
 
-function get_likes($id,$token)
+function get_utilisateur_avis($id,$token)
 {
   /// Envoi de la requête
   $result = file_get_contents(
@@ -195,7 +195,7 @@ function get_likes($id,$token)
         )
     )
 );
-  return json_decode($result, true)['data'][0][0];
+  return json_decode($result, true)['data'];
 }
 
 function avis($id_article,$token,$avis)
