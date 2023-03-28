@@ -50,6 +50,11 @@ include_once('./librairies/lib.php')
       publier($_POST['contenuArtPub'],$_SESSION['token']);
     }
 
+    // Modification d'un article dans edit, validation modif ici
+    if(isset($_POST['boutonValiderModifier'])){
+      modifier($_POST['contenuArtMod'],$_POST['boutonValiderModifier'],$_SESSION['token']);
+    }
+
     if(isset($_POST['boutonSupprimer'])){
       supprimer($_POST['boutonSupprimer'],$_SESSION['token']);
     }
@@ -77,8 +82,6 @@ include_once('./librairies/lib.php')
     </form>
   </div>
 
-  <!-- Modification d'un article -->
-
   <!-- Affichage des articles -->
   <form method="POST" id="conteneurArticles">
     <?php
@@ -95,7 +98,7 @@ include_once('./librairies/lib.php')
             if($id_utilisateur == $article[4] || $id_role == 1) {
               if($id_role != 1) {
                 echo "
-                <button type='submit' class='bouton boutonModifier' name='boutonModifier' value='".$article[0]."'>
+                <button type='submit' class='bouton boutonModifier' name='boutonModifier' formaction='edit_article.php' value='".$article[0]."'>
                   <img src='../images/modifier.png' alt='image modifier' width='30'>
                 </button>
                 <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">

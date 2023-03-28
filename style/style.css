@@ -557,3 +557,29 @@ button > img {
   text-decoration: underline;
   font-family: proxima;
 }
+
+#boutonAnnuler {
+  background-color: var(--third-background-color);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--global-radius);
+  padding: 2px;
+  width: 200px;
+  justify-self: center;
+}
+#boutonAnnuler:hover {
+  background-color: var(--third-background-color-hover);
+}
+
+#boutonValiderModifier {
+  background-color: var(--second-background-color);
+  border: none;
+  cursor: pointer;
+  border-radius: var(--global-radius);
+  padding: 2px;
+  width: 200px;
+  justify-self: center;
+}
+#boutonValiderModifier:hover {
+  background-color: var(--second-background-color-hover);
+}

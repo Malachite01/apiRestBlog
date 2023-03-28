@@ -100,7 +100,7 @@ function get_all_articles()
   }
 }
 
-function get_one_articles($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
+function get_one_article($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
@@ -135,6 +135,22 @@ function publier($contenu, $token) {
                 'Authorization: Bearer '.$token."\r\n"
                 .'Content-Type: application/json'."\r\n"
                 .'Content-Length:'.strlen($data_string) . "\r\n"
+            )
+        )   
+    )
+)
+);    
+}
+
+function modifier($id_article, $token) {
+  return file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => '',
+            'header' => array(
+                'Authorization: Bearer '.$token."\r\n"
             )
         )   
     )

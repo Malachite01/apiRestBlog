@@ -112,7 +112,7 @@
         $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
         $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
 
-        $auteur_article = get_one_articles($_GET['id_article']);
+        $auteur_article = get_one_article($_GET['id_article']);
 
         if($id_role == 1 or $id_utilisateur==$auteur_article['data'][0][0]){
 
