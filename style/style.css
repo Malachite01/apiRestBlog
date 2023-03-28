@@ -522,10 +522,7 @@ button > img {
 /*!       |_____PAGE_D'AVIS_______|           */
 
 .unePersonne {
-  position: relative;
   background-color: var(--avis-background-color);
-  width: 100%;
-  justify-self: center;
   padding: 15px;
   border-radius: var(--global-radius);
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
@@ -535,7 +532,7 @@ button > img {
 .conteneurAvis {
   position: relative;
   background-color: var(--article-background-color);
-  width: 80%;
+  width: 70%;
   justify-self: center;
   top: 170px;
   padding: 25px;
@@ -544,4 +541,19 @@ button > img {
   padding-bottom: 80px;
   box-shadow: rgba(0, 0, 0, 0.09) 0px 3px 12px;
   margin-bottom: 90px;
+}
+
+.avis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.titreLike {
+  position: absolute;
+  top: 100px;
+  left: 30px;
+  color: var(--grey-font-color);
+  font-size: 1.5em;
+  text-decoration: underline;
+  font-family: proxima;
 }

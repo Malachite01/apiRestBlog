@@ -32,14 +32,24 @@ include_once('./librairies/lib.php')
   }
   ?>
   <h1 id="logo">API Rest Articles</h1>
-
+  <h2 class="titreLike">Article "Titre"</h2>
   <!-- Affichage des articles -->
-  <div class="conteneurAvis">
-    <p class="auteurEtDateAjoutEtModif">Personne ayant <?php // like ou dislike ?></p>  
-    <div class="unePersonne"></div>
-    <div class="unePersonne"></div>
-    <div class="unePersonne"></div>
-    <div class="unePersonne"></div>
+  <div class="avis">
+    <div class="conteneurAvis">
+      <p class="auteurEtDateAjoutEtModif"><img src="../images/like.png" alt="like" width="30"> Personnes ayant liké</p>  
+      <div class="unePersonne">liké par michel</div>
+      <div class="unePersonne">liké par michel</div>
+      <div class="unePersonne">liké par michel</div>
+      <div class="unePersonne">liké par michel</div>
+    </div>
+
+    <div class="conteneurAvis">
+      <p class="auteurEtDateAjoutEtModif"><img src="../images/like.png" alt="like" style="transform: rotate(180deg);" width="30"> Personnes ayant disliké</p>  
+      <div class="unePersonne">disliké par michel</div>
+      <div class="unePersonne">disliké par michel</div>
+      <div class="unePersonne">disliké par michel</div>
+      <div class="unePersonne">disliké par michel</div>
+    </div>
   </div>
 </body>
 </html>
