@@ -26,9 +26,8 @@
   switch ($http_method){
     /// Cas de la méthode GET
     case "GET" :
-
-      if(!empty($_GET["id_article"])){
-        if(!empty($_GET['params'])){
+      if(isset($_GET["id_article"])){
+        if(isset($_GET['params'])){
           if($_GET['params']=='auteur'){
             $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
           }else if($_GET['params']=='avis'){
@@ -41,11 +40,9 @@
         }else{
             $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
         }
-        
-      }else if(!empty($_GET["Id_utilisateur"])){
+      }else if(isset($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
       }else{
-
         $res=api_blog_actions("recup_articles");
       }
       
@@ -101,7 +98,7 @@
                   deliver_response(500, "Erreur pour la modification de l'article" , NULL);
                 }else{
                   deliver_response(201, "Article modifié", NULL);
-                }              
+                }
               } else {
                 deliver_response(403, "Permission non accordée, vous n'êtes pas l'auteur de cette publication." , NULL);
               }
@@ -126,17 +123,13 @@
         case "DELETE" :
           if(is_jwt_valid($bearer)){
             // vérifier que c'est bien l'auteur de l'article / qu'il est modérateur
-
             $id_role = json_decode(jwt_decode($bearer), true)['id_role'];
             $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
-
             $auteur_article = get_id_auteur_article($_GET['id_article']);
         
             if($id_role == 1 || $id_utilisateur==$auteur_article['data'][0][0]){
-              
               /// Récupération de l'identifiant de la ressource envoyé par le Client
               if (!empty($_GET['id_article'])){
-                
                 $res=api_blog_actions('supprime',$_GET['id_article']);
                 if(!$res){
                   deliver_response(500,"Suppression échouée",NULL);
@@ -150,11 +143,10 @@
           } else {
             deliver_response(401, "Token invalide" , NULL);
           }
+        break;
       
-      break;
-      
-      default:
-      deliver_response(404, "Introuvable", NULL);
-      break;
+        default:
+          deliver_response(404, "Introuvable", NULL);
+        break;
     }
     ?>
