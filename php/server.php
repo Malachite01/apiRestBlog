@@ -3,28 +3,19 @@
 
 
 // traitement de toutes les requetes qu'on envoie au serveur
-// include_once("./librairies/lib.php");  
 include_once("./librairies/jwt_utils.php");
 include_once('./librairies/lib_server.php');
 
 	/// Paramétrage de l'entête HTTP (pour la réponse au Client)
 	header("Content-Type:application/json");
-
 	// fonction pour la connexion à la bd
   $linkpdo=connexionBd();
-
 	/// Identification du type de méthode HTTP envoyée par le client
 	$http_method = $_SERVER['REQUEST_METHOD'];
-	
 	//verification du token :
 	$bearer="";
 	$bearer=get_bearer_token();
 
-
-
-
-
-	
   switch ($http_method){
     /// Cas de la méthode GET
     case "GET" :
