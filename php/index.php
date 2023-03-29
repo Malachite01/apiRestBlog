@@ -25,7 +25,7 @@ include_once('./librairies/lib.php')
     $id_role=json_decode(jwt_decode($_SESSION['token']), true)['id_role'];
     $exp=json_decode(jwt_decode($_SESSION['token']), true)['exp'];
     echo'
-    <p class="nomUtilisateur"><a href="index.php?Id_utilisateur='.$id_utilisateur.'" id="lienCliquable">'.$username.'</a> connecté</p>
+    <p class="nomUtilisateur">'.($username != "admin" ? '<a href="index.php?Id_utilisateur='.$id_utilisateur.'" id="lienCliquable">'.$username.'</a>' : $username).' connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     <p id="role" '.($id_role == 1 ? "class='moderator'>Moderator <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>" : "class='publisher'>Publisher <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>").'</p>';
     if($id_role != 1) {
@@ -100,38 +100,44 @@ include_once('./librairies/lib.php')
       //MODERATOR: Un modérateur connecté NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder a la liste de likes et dislikes
       if(isset($_GET['Id_utilisateur'])){
         $articles=recup_mes_articles($_GET['Id_utilisateur']);
+        echo '<a href="index.php" id="boutonRetour"><button type="button" id="boutonFermer"><img src="../images/retour.png" alt="image de retour" width="20"> Retour</button></a>
+        <h2 id="titreMesArticles">Mes articles</h2>'; 
       }else{
         $articles = get_all_articles();
       }
-      foreach ($articles['data'] as $article) {
-        echo '
-        <div class="article">
-          <p class="auteurEtDateAjoutEtModif">'.get_user($article[4]) .', le '.($article[2]==null ? date('d/m/Y', strtotime($article[1])) : date('d/m/Y', strtotime($article[2])).' (modifié)').'</p>
-          <p class="contenuArticle">&ensp;'.$article[3].'</p>';
-          if(isset($_SESSION['token'])) {
-            if($id_utilisateur == $article[4] || $id_role == 1) {
-              if($id_role != 1) {
-                echo "
-                <button type='submit' class='bouton boutonModifier' name='boutonModifier' formaction='edit_article.php' value='".$article[0]."'>
-                  <img src='../images/modifier.png' alt='image modifier' width='30'>
-                </button>
-                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
-                  <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
-                </button>";
-              } else {
-                echo "
-                <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
-                  <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
-                </button>";
+      if($articles == null) {
+        echo '<p id="pasDArticles">Aucun article</p>';
+      } else {
+        foreach ($articles['data'] as $article) {
+          echo '
+          <div class="article">
+            <p class="auteurEtDateAjoutEtModif">'.get_user($article[4]) .', le '.($article[2]==null ? date('d/m/Y', strtotime($article[1])) : date('d/m/Y', strtotime($article[2])).' (modifié)').'</p>
+            <p class="contenuArticle">&ensp;'.$article[3].'</p>';
+            if(isset($_SESSION['token'])) {
+              if($id_utilisateur == $article[4] || $id_role == 1) {
+                if($id_role != 1) {
+                  echo "
+                  <button type='submit' class='bouton boutonModifier' name='boutonModifier' formaction='edit_article.php' value='".$article[0]."'>
+                    <img src='../images/modifier.png' alt='image modifier' width='30'>
+                  </button>
+                  <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
+                    <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
+                  </button>";
+                } else {
+                  echo "
+                  <button type='submit' class='bouton boutonSupprimer' name='boutonSupprimer' value='".$article[0]."' onclick=\"return confirm('Etes vous sur de vouloir supprimer cet article ?');\">
+                    <img src='../images/supprimer.png' alt='image supprimer' width='25' style='padding: 2.5px;'>
+                  </button>";
+                }
               }
             }
-          }
 
-          echo '
-          <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
-          <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
-        </div>
-        ';
+            echo '
+            <button type="submit" class="bouton boutonLike" name="boutonLike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de like" width="25">'.$article[5].'</button>
+            <button type="submit" class="bouton boutonDislike" name="boutonDislike" value="'.$article[0].'"><img src="'.(isset($_SESSION['token']) ? ($article[7] == $id_utilisateur ? "../images/like.png" : "../images/emptylike.png") : "../images/emptylike.png").'" alt="image de dislike" width="25">'.$article[6].'</button>
+          </div>
+          ';
+        }
       }
     ?>
 
