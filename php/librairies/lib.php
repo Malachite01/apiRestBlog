@@ -305,9 +305,10 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
 
         case 'recup_likes':
           $req=$linkpdo->prepare('
-          SELECT username
+          SELECT username, avis
           FROM `likes` natural join `utilisateur` 
-          WHERE id_article=:id;');
+          WHERE id_article=14
+          group by avis;');
           $req->bindParam('id',$id_article);
           break;
 
