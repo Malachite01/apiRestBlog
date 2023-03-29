@@ -21,8 +21,6 @@ function isConnectionValid($login, $passwd) {
     // requete sql de vérif
     $linkpdo=connexionBd();
 
-    //todo $mdp_test = hash('sha256', "ZEN02anWobA4ve5zxzZz" . $_POST['password']);
-
     // Je récupère les informations sur le compte de l'utilisateur
     $query = "SELECT id_utilisateur, id_role FROM utilisateur WHERE username=:username AND password=:password";
     $stmt = $linkpdo->prepare($query);
@@ -103,28 +101,6 @@ function get_un_article($id_article)
 {
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article,
-    false,
-    stream_context_create(array(
-        'http' => array(
-            'method' => 'GET',
-            'header' => array(
-            )
-        )   
-    )
-)
-);    
-  $data = json_decode($result, true);
-  //var_dump($data);
-  if($data['data'] != false) {
-    return$data;
-  }
-}
-
-function get_id_auteur_article($id_article)
-{
-  // à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
-  $result = file_get_contents(
-    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article.'&params=auteur',
     false,
     stream_context_create(array(
         'http' => array(

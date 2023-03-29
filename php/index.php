@@ -27,7 +27,7 @@ include_once('./librairies/lib.php')
     echo'
     <p id="nomUtilisateur">'.$username.' connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
-    <p id="role">'.($id_role == 1 ? "Moderator" : "Publisher").'</p>';
+    <p id="role" '.($id_role == 1 ? "class='moderator'>Moderator <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>" : "class='publisher'>Publisher <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>").'</p>';
     if($id_role != 1) {
       echo '<button type="button" onclick="fenOpen(\'aCacher\'),deCache(\'aCacher\')" id="boutonAjout"><img src="../images/plus.png" alt="Icone ajouter" width="25">Ajouter un article</button>';
     };
@@ -66,19 +66,17 @@ include_once('./librairies/lib.php')
     if(isset($_POST['boutonValiderModifier'])){
       modifier_article($_POST['contenuArtMod'],$_POST['boutonValiderModifier'],$_SESSION['token']);
     }
-
     if(isset($_POST['boutonSupprimer'])){
       supprimer($_POST['boutonSupprimer'],$_SESSION['token']);
     }
-
   }else{
     echo'
     <a href="login.php"><button type="submit" name="boutonDeco" id="boutonCo">Connexion</button></a>
-    <p id="role">Guest</p>
+    <p id="role" class="guest">Guest <img src="../images/help.png" alt="info" style="margin-bottom: -3px;" width=15></p>
     ';
     if(isset($_POST['boutonDislike']) || isset($_POST['boutonLike']) || isset($_POST['boutonPublier']) || isset($_POST['boutonSupprimer'])){
       //redirection vers la page de connexion
-      header("location:login.php");
+      header("Location: login.php");
     }
   }
   ?>

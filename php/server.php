@@ -84,7 +84,6 @@ include_once('./librairies/lib_server.php');
             
             if(isset($var['contenu'])) {
               $id_utilisateur = json_decode(jwt_decode($bearer), true)['id_utilisateur'];
-              var_dump($id_utilisateur . " et " . get_id_auteur_article($var['id_article'])['data'][0][0]);
               if($id_utilisateur == get_id_auteur_article($var['id_article'])['data'][0][0]) {
                 $res=api_blog_actions('modifier_article',$var['id_article'], null, null, $var['contenu']);
                 if(!$res){ 

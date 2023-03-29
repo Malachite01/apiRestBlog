@@ -43,34 +43,33 @@ include_once('./librairies/lib.php')
             array_push($liste_likes,$var[$i][0]);
           }
         }
-
-        var_dump($liste_likes);
-        var_dump($liste_dislikes);
-
-
       }
     }
-
+  } else {
+    header('Location : auth.php');
   }
   ?>
   <h1 id="logo">API Rest Articles</h1>
-  <h2 class="titreLike">Article "Titre"</h2>
+  <h2 class="titreLike">Avis pour l'article id=<?php echo $_GET['article']?></h2>
+  <a href="index.php" id="boutonRetour"><button type="button" id="boutonFermer"><img src="../images/retour.png" alt="image de retour" width="25"> Retour</button></a>
   <!-- Affichage des articles -->
   <div class="avis">
     <div class="conteneurAvis">
-      <p class="auteurEtDateAjoutEtModif"><img src="../images/like.png" alt="like" width="30"> Personnes ayant liké</p>  
-      <div class="unePersonne">liké par michel</div>
-      <div class="unePersonne">liké par michel</div>
-      <div class="unePersonne">liké par michel</div>
-      <div class="unePersonne">liké par michel</div>
+      <p class="auteurEtDateAjoutEtModif"><img src="../images/like.png" alt="like" width="30"> Personnes ayant liké</p>
+      <?php
+        for($i=0; $i<sizeof($liste_likes); $i++) {
+          echo '<div class="unePersonne">liké par '.$liste_likes[$i].'</div>';
+        }
+      ?>
     </div>
 
     <div class="conteneurAvis">
       <p class="auteurEtDateAjoutEtModif"><img src="../images/like.png" alt="like" style="transform: rotate(180deg);" width="30"> Personnes ayant disliké</p>  
-      <div class="unePersonne">disliké par michel</div>
-      <div class="unePersonne">disliké par michel</div>
-      <div class="unePersonne">disliké par michel</div>
-      <div class="unePersonne">disliké par michel</div>
+      <?php
+        for($i=0; $i<sizeof($liste_dislikes); $i++) {
+          echo '<div class="unePersonne">disliké par '.$liste_dislikes[$i].'</div>';
+        }
+      ?>
     </div>
   </div>
 </body>

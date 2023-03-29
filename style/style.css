@@ -583,3 +583,62 @@ button > img {
 #boutonValiderModifier:hover {
   background-color: var(--second-background-color-hover);
 }
+
+#boutonRetour {
+  position: relative;
+  top: 40px;
+  margin: 5px
+}
+.moderator:hover{
+  cursor: help;
+}
+.moderator:hover::after {
+  content: "Un modérateur NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder à la liste de likes et dislikes (en cliquant sur un like ou dislike)";
+  position: absolute;
+  font-family: proxima;
+  top: 22px;
+  right: -70px;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: .9em;
+  padding: 2px;
+  width: 250px;
+  justify-self: center;
+}
+
+.publisher:hover{
+  cursor: help;
+}
+.publisher:hover::after {
+  content: "Un publisher peut PUBLIER un article, modifier ou supprimer SES articles, il peut aussi interragir et liker";
+  position: absolute;
+  font-family: proxima;
+  top: 22px;
+  right: -80px;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: .9em;
+  padding: 2px;
+  width: 250px;
+  justify-self: center;
+}
+
+.guest:hover{
+  cursor: help;
+}
+.guest:hover::after {
+  content: "Un guest (utilisateur non connecté) ne peut que consulter, il sera redirigé vers la page de connexion à chaque interaction";
+  position: absolute;
+  font-family: proxima;
+  top: 22px;
+  right: -100px;
+  color: black;
+  background-color: lightgray;
+  border-radius: var(--global-radius);
+  font-size: .9em;
+  padding: 2px;
+  width: 250px;
+  justify-self: center;
+}

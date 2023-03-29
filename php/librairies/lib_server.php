@@ -18,6 +18,28 @@ function connexionBd()
     return $linkpdo;
 }
 
+function get_id_auteur_article($id_article)
+{
+  // à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article.'&params=auteur',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  //var_dump($data);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
 /// Envoi de la réponse au Client
 function deliver_response($status, $status_message, $data)
 {

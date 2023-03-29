@@ -22,9 +22,6 @@
         <input maxlength="50" minlength="2" type="text" name="login" placeholder="Nom d'utilisateur" />
         <input maxlength="50" minlength="2" type="password" name="password" placeholder="Mot de passe" />
         <input class="button" type="submit" value="CONNEXION" />
-
-        <p class="message">Pas de compte ? </p>
-        <a id="lien-account" href="create_user.php">Créer un compte</a>
       </form>
     </div>
   </div>
