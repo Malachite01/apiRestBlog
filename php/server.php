@@ -1,9 +1,11 @@
 <?php
 
 
-  // traitement de toutes les requetes qu'on envoie au serveur
-  include_once("./librairies/lib.php");  
-	include_once("./librairies/jwt_utils.php");
+
+// traitement de toutes les requetes qu'on envoie au serveur
+// include_once("./librairies/lib.php");  
+include_once("./librairies/jwt_utils.php");
+include_once('./librairies/lib_server.php');
 
 	/// Paramétrage de l'entête HTTP (pour la réponse au Client)
 	header("Content-Type:application/json");
