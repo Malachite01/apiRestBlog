@@ -100,6 +100,9 @@ include_once('./librairies/lib.php')
       //MODERATOR: Un modérateur connecté NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder a la liste de likes et dislikes
       if(isset($_GET['Id_utilisateur'])){
         $articles=recup_mes_articles($_GET['Id_utilisateur']);
+        if($_GET['Id_utilisateur'] != $id_utilisateur) {
+          header("location: index.php");
+        }
         echo '<a href="index.php" id="boutonRetour"><button type="button" id="boutonFermer"><img src="../images/retour.png" alt="image de retour" width="20"> Retour</button></a>
         <h2 id="titreMesArticles">Mes articles</h2>'; 
       }else{
