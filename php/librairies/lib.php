@@ -99,7 +99,6 @@ function get_all_articles()
     return $data;
   }
 }
-
 function get_un_article($id_article)
 {
   $result = file_get_contents(
@@ -121,8 +120,9 @@ function get_un_article($id_article)
   }
 }
 
-function get_id_auteur_article($id_article)// à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
+function get_id_auteur_article($id_article)
 {
+  // à l'heure actuelle, fonction qui retourne uniquement l'auteur d'un article passé en parametre
   $result = file_get_contents(
     'http://localhost/apiRestBlog/php/server.php?id_article='.$id_article.'&params=auteur',
     false,

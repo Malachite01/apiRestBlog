@@ -29,25 +29,23 @@
 
       if(!empty($_GET["id_article"])){
         if(!empty($_GET['params'])){
-          //faire la verif token
-          if(is_jwt_valid($bearer)){
-            $res=api_blog_actions("recup_likes",$_GET["id_article"]);
-          }else{
-            deliver_response(403, "Permission non accordée" , NULL);
+          if($_GET['params']=='auteur'){
+            $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
+          }else if($_GET['params']=='avis'){
+            if(is_jwt_valid($bearer)){
+              $res=api_blog_actions("recup_likes",$_GET["id_article"]);
+            }else{
+              deliver_response(403, "Permission non accordée" , NULL);
+            }
           }
         }else{
-          if(empty($_GET['params'])){
-            //recup tout
             $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
-          }else{
-            //recup que l'auteur
-            $res=api_blog_actions("recup_auteur",$_GET["id_article"]);
-          }
         }
         
       }else if(!empty($_GET["Id_utilisateur"])){
         $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
       }else{
+
         $res=api_blog_actions("recup_articles");
       }
       
