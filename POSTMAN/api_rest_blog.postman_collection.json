@@ -1,0 +1,257 @@
+{
+	"info": {
+		"_postman_id": "6c4c3024-9703-433b-b47b-bcdf44f2e83b",
+		"name": "api_rest_blog",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25737967"
+	},
+	"item": [
+		{
+			"name": "connexion (recup token)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"admin\",\r\n    \"password\":\"admin\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/auth.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"auth.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "poster un article (U.S. Publisher)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfdXRpbGlzYXRldXIiOjEsImlkX3JvbGUiOjEsImV4cCI6MTY4MDAxMDU0NX0.DNsBQEj9cs24A0dvt-O3I2xS6G7jTpx5ztEpL9fkqpA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"contenu\":\"voici mon super nouvel article\",\r\n    \"id_utilisateur\":\"2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "supprimer article depuis serveur (U.S. Moderateur)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get depuis index (U.S. non identifié)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfdXRpbGlzYXRldXIiOjEsImlkX3JvbGUiOjAsImV4cCI6MTY3ODg5NDcyN30.1pEHPYyiVaZ3eNYDDXPI-Yxay68fGZ-e7H8NvLdePQw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get_one_article",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "get user depuis le serveur",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfdXRpbGlzYXRldXIiOjEsImlkX3JvbGUiOjEsImV4cCI6MTY3OTU2NTk5MH0.IkPYoFfm8OIRBVDsglT2ci1Yzn1FgCgv0v0mZqcjCzY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php?Id_utilisateur=1",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					],
+					"query": [
+						{
+							"key": "Id_utilisateur",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get les likes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfdXRpbGlzYXRldXIiOjEsImlkX3JvbGUiOjAsImV4cCI6MTY3ODg5NDcyN30.1pEHPYyiVaZ3eNYDDXPI-Yxay68fGZ-e7H8NvLdePQw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "put (avis) depuis serveur",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWRfdXRpbGlzYXRldXIiOjEsImlkX3JvbGUiOjEsImV4cCI6MTY3OTU2NTk5MH0.IkPYoFfm8OIRBVDsglT2ci1Yzn1FgCgv0v0mZqcjCzY",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_article\":\"1\",\r\n    \"id_utilisateur\":\"1\",\r\n    \"avis\":\"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost/apirestblog/php/server.php",
+					"host": [
+						"localhost"
+					],
+					"path": [
+						"apirestblog",
+						"php",
+						"server.php"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
