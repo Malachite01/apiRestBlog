@@ -1,5 +1,22 @@
 <?php
 
+function connexionBd()
+{
+    // informations de connection
+    $SERVER = '127.0.0.1';
+    $DB = 'bd_blog';
+    $LOGIN = 'root';
+    $MDP = '';
+    // tentative de connexion à la BD
+    try {
+        // connexion à la BD
+        $linkpdo = new PDO("mysql:host=$SERVER;dbname=$DB", $LOGIN, $MDP);
+    } catch (Exception $e) {
+        die('Erreur ! Problème de connexion à la base de données : ' . $e->getMessage());
+    }
+    // retourne la connection
+    return $linkpdo;
+}
 
 /// Envoi de la réponse au Client
 function deliver_response($status, $status_message, $data)
@@ -44,7 +61,7 @@ switch ($action) {
       $req=$linkpdo->prepare('
       SELECT username, avis
       FROM `likes` natural join `utilisateur` 
-      WHERE id_article=14
+      WHERE id_article=:id
       group by avis;');
       $req->bindParam('id',$id_article);
       break;

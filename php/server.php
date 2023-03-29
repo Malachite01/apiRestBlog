@@ -62,7 +62,7 @@ include_once('./librairies/lib_server.php');
           if($id_role != 1) {
             /// Récupération des données envoyées par le Client
             $postedData = file_get_contents('php://input');
-            $var=json_decode($postedData, 'true');
+            $var=json_decode($postedData, true);
             
             $res=api_blog_actions('envoi',null,$var['id_utilisateur'],null,$var['contenu']);
             
