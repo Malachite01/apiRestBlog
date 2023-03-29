@@ -25,7 +25,7 @@ include_once('./librairies/lib.php')
     $id_role=json_decode(jwt_decode($_SESSION['token']), true)['id_role'];
     $exp=json_decode(jwt_decode($_SESSION['token']), true)['exp'];
     echo'
-    <p id="nomUtilisateur">'.$username.' connecté</p>
+    <p class="nomUtilisateur"><a href="index.php?Id_utilisateur='.$id_utilisateur.'" id="lienCliquable">'.$username.'</a> connecté</p>
     <a href="logout.php"><button type="submit" name="boutonDeco" id="boutonDeco">Déconnexion</button></a>
     <p id="role" '.($id_role == 1 ? "class='moderator'>Moderator <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>" : "class='publisher'>Publisher <img src='../images/help.png' alt='info' style='margin-bottom: -3px;' width=15>").'</p>';
     if($id_role != 1) {
