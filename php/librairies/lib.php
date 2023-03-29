@@ -114,7 +114,7 @@ function recup_mes_articles($id_utilisateur)
 )
 );    
   $data = json_decode($result, true);
-  if($data['data'] != false) {
+if($data['data']!=null) {
     return$data;
   }
 }

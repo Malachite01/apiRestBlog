@@ -46,7 +46,7 @@ include_once('./librairies/lib_server.php');
       }
       
       if(!$res){
-        deliver_response(500, "Erreur lors de la récupération" , NULL);
+        deliver_response(201, "Aucune données à récuperer" , NULL);
       }else{
         deliver_response(201, "Récupération réussie", $res);
       }
