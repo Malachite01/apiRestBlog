@@ -262,9 +262,4 @@ function avis($id_article,$token,$avis)
 );    
 }
 
-
-
-
-
-
 ?>
