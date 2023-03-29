@@ -106,10 +106,13 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
 
       case 'recup_mes_articles':
         $req=$linkpdo->prepare('
-          SELECT *
-          FROM `article` 
-          WHERE id_utilisateur=:id;');
-          $req->bindParam('id',$id_utilisateur);
+        SELECT a.Id_article, a.date_pub, a.date_mod, a.contenu, a.Id_utilisateur, SUM(CASE WHEN l.avis = 1 THEN 1 ELSE 0 END) AS num_likes, SUM(CASE WHEN l.avis = 0 THEN 1 ELSE 0 END) AS num_dislikes, l.Id_utilisateur 
+        FROM article a 
+        LEFT JOIN likes l ON a.Id_article = l.Id_article 
+        WHERE a.Id_utilisateur=:id 
+        GROUP BY a.Id_article, a.date_pub, a.date_mod, a.contenu;');
+         
+        $req->bindParam('id',$id_utilisateur);
           break;
       
       case 'recup_utilisateur':
