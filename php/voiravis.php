@@ -32,7 +32,22 @@ include_once('./librairies/lib.php')
     if($id_role==1){
       if(isset($_GET['article'])){
         $var = get_utilisateur_avis($_GET['article'],$_SESSION['token']);
-        var_dump($var);
+
+        $liste_likes=array();
+        $liste_dislikes=array();
+
+        for ($i=0;$i<sizeof($var);$i++){
+          if($var[$i][1]==0){
+            array_push($liste_dislikes,$var[$i][0]);
+          }else{
+            array_push($liste_likes,$var[$i][0]);
+          }
+        }
+
+        var_dump($liste_likes);
+        var_dump($liste_dislikes);
+
+
       }
     }
 

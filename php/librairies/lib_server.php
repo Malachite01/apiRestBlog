@@ -62,7 +62,7 @@ function api_blog_actions($action, $id_article=null, $id_utilisateur=null, $avis
       SELECT username, avis
       FROM `likes` natural join `utilisateur` 
       WHERE id_article=:id
-      group by avis;');
+      order by avis;');
       $req->bindParam('id',$id_article);
       break;
 
