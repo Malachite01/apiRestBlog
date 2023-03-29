@@ -34,7 +34,13 @@ include_once('./librairies/lib_server.php');
             $res=api_blog_actions("recup_un_article",$_GET["id_article"]);
         }
       }else if(isset($_GET["Id_utilisateur"])){
-        $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
+        if(isset($_GET['params'])){
+          if($_GET['params']=='mes_articles'){
+            $res=api_blog_actions("recup_mes_articles",null,$_GET["Id_utilisateur"]);
+          }
+        }else{
+          $res=api_blog_actions("recup_utilisateur",null,$_GET["Id_utilisateur"]);
+        }
       }else{
         $res=api_blog_actions("recup_articles");
       }

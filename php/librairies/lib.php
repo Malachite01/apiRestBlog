@@ -97,6 +97,30 @@ function get_all_articles()
     return $data;
   }
 }
+
+
+function recup_mes_articles($id_utilisateur)
+{
+  $result = file_get_contents(
+    'http://localhost/apiRestBlog/php/server.php?Id_utilisateur='.$id_utilisateur.'&params=mes_articles',
+    false,
+    stream_context_create(array(
+        'http' => array(
+            'method' => 'GET',
+            'header' => array(
+            )
+        )   
+    )
+)
+);    
+  $data = json_decode($result, true);
+  if($data['data'] != false) {
+    return$data;
+  }
+}
+
+
+
 function get_un_article($id_article)
 {
   $result = file_get_contents(

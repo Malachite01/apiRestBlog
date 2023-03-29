@@ -98,7 +98,11 @@ include_once('./librairies/lib.php')
       //GUEST: Un utilisateur non connecté ne peut que consulter, il sera redirigé vers la page de connexion à chaque interaction
       //PUBLISHER: Un utilisateur connecté peut PUBLIER un article, modifier ou supprimer SES articles
       //MODERATOR: Un modérateur connecté NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder a la liste de likes et dislikes
-      $articles = get_all_articles();
+      if(isset($_GET['Id_utilisateur'])){
+        $articles=recup_mes_articles($_GET['Id_utilisateur']);
+      }else{
+        $articles = get_all_articles();
+      }
       foreach ($articles['data'] as $article) {
         echo '
         <div class="article">
