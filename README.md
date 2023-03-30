@@ -19,11 +19,13 @@ est une API REST de blog avec une interface utilisateur, afin de traiter GET, PO
 <br><br>
 
 <h2>Comptes disponible : </h2> &ensp;
-<br>-Compte modérateur: login: admin password: admin
-<br>-Compte publisher: login: juan password: juan
-<br>-Compte publisher: login: pedro password: pedro
-<br>-Compte publisher: login: miguel password: miguel
-<br>-Compte publisher: login: roberto password: roberto
+<br>-Compte modérateur: 
+  <br>&ensp;login: admin password: admin
+<br><br>-Comptes publisher: 
+  <br>&ensp;login: juan password: juan
+  <br>&ensp;login: pedro password: pedro
+  <br>&ensp;login: miguel password: miguel
+  <br>&ensp;login: roberto password: roberto
 <br><br>
 
 <h2>A savoir : </h2> &ensp;
