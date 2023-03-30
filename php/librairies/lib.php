@@ -93,8 +93,10 @@ function get_all_articles()
 )
 );    
   $data = json_decode($result, true);
-  if($data['data'] != false) {
+  if(isset($data['data'])) {
     return $data;
+  } else {
+    return "Vide";
   }
 }
 
@@ -114,8 +116,10 @@ function recup_mes_articles($id_utilisateur)
 )
 );    
   $data = json_decode($result, true);
-if($data['data']!=null) {
-    return$data;
+  if(isset($data['data'])) {
+    return $data;
+  } else {
+    return "Pas d'articles pour cet utilisateur";
   }
 }
 
