@@ -32,5 +32,6 @@ est une API REST de blog avec une interface utilisateur, afin de traiter GET, PO
 <br>-L'url d'accès du site est : http://localhost/apiRestBlog/php/index.php (normalement vous serez automatiquement redirigé à partir du dossier apiRestBlog vers index.php)
 <br>-L'url d'accès du backend est : http://localhost/apiRestBlog/php/server.php
 <br>-Les librairies sont dans le dossier /php/librairies/ elles sont divisées en 3 fichiers, un fichier pour les tokens (jwt_utils.php), un autre pour nos fonctions coté serveur (lib_server.php), et enfin un autre pour le coté client (lib.php)
+<br>-Pour faire les requêtes postman vous aurez parfois besoin de renseigner le token dans les autorisations. Pour le récupérer une requête prénommée Get_Token permet de le récupérer, il suffit juste de renseigner vos identifiants de connexion.
 
 <br><b><i>par Antunes Mathieu, Trochel Paul, groupe C</i></b>
