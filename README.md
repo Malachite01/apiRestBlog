@@ -3,7 +3,7 @@ est une API REST de blog avec une interface utilisateur, afin de traiter GET, PO
 <br><br>
 
 <h2><img src="https://user-images.githubusercontent.com/112857106/223517565-8b8d33a7-2e78-4049-a2f9-46cf9899d1c7.png" style="width: 30px;">Installation : </h2> &ensp;
-<br>Utiliser XAMPP (ou WAMPP) et placer le projet dans le dossier htdocs. Importer la BD SQL dans phpmyadmin sous le nom de "bd_blog". Si vous souhaitez modifier les informations de connexion à la BD à votre guise, vous pouvez changer les variables situées dans la fonction connexionBD() située dans les fichiers /php/librairies/lib.php et /php/librairies/lib_server.php. Dans le cas contraire, tout devrait fonctionner directement.
+<br>Utiliser XAMPP (ou WAMPP) et placer le projet dans le dossier htdocs (ou www). Importer la BD SQL dans phpmyadmin sous le nom de "bd_blog". Si vous souhaitez modifier les informations de connexion à la BD à votre guise, vous pouvez changer les variables situées dans la fonction connexionBD() située dans les fichiers /php/librairies/lib.php et /php/librairies/lib_server.php. Dans le cas contraire, tout devrait fonctionner directement.
 <br><br>
 
 <h2>Roles : </h2> &ensp;
