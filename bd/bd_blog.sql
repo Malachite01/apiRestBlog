@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mer. 29 mars 2023 à 15:56
+-- Généré le : jeu. 30 mars 2023 à 09:40
 -- Version du serveur : 10.4.27-MariaDB
 -- Version de PHP : 8.2.0
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `bd_blog`
 --
+CREATE DATABASE IF NOT EXISTS `bd_blog` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `bd_blog`;
 
 -- --------------------------------------------------------
 
