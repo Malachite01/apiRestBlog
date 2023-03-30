@@ -6,8 +6,9 @@ est une API REST de blog avec une interface utilisateur, afin de traiter GET, PO
 <br>Utiliser XAMPP (ou WAMPP) et placer le projet dans le dossier htdocs (ou www). Importer la BD SQL dans phpmyadmin sous le nom de "bd_blog". Si vous souhaitez modifier les informations de connexion à la BD à votre guise, vous pouvez changer les variables situées dans la fonction connexionBD() située dans les fichiers /php/librairies/lib.php et /php/librairies/lib_server.php. Dans le cas contraire, tout devrait fonctionner directement.
 <br><br>
 
-<h2>Roles : </h2> &ensp;
-<br>-GUEST: Est un utilisateur non connecté, qui ne peut que consulter, il sera redirigé vers la page de connexion à chaque interaction
+<h2>Roles : </h2> 
+<b><ins><span>⚠️⚠️⚠️COMME DANS LE SUJET LES RÔLES NE SONT PAS CUMULATIFS⚠️⚠️⚠️</span></ins></b>
+&ensp;<br>-GUEST: Est un utilisateur non connecté, qui ne peut que consulter, il sera redirigé vers la page de connexion à chaque interaction
 <br><br>-PUBLISHER: Est un utilisateur connecté qui peut PUBLIER un article, consulter (en cliquant sur son nom), modifier ou supprimer SES articles
 <br><br>-MODERATOR: Est un modérateur connecté, qui NE PEUT PAS PUBLIER un article, ni modifier, mais il peut supprimer TOUS les articles et accéder à la liste de likes et dislikes (en cliquant sur un like ou dislike en mode admin)
 <br><br>
