@@ -34,4 +34,14 @@ est une API REST de blog avec une interface utilisateur, afin de traiter GET, PO
 <br>-Les librairies sont dans le dossier /php/librairies/ elles sont divisées en 3 fichiers, un fichier pour les tokens (jwt_utils.php), un autre pour nos fonctions coté serveur (lib_server.php), et enfin un autre pour le coté client (lib.php)
 <br>-Pour faire les requêtes postman vous aurez parfois besoin de renseigner le token dans les autorisations. Pour le récupérer une requête prénommée Get_Token permet de le récupérer, il suffit juste de renseigner vos identifiants de connexion.
 
+<h2>Photos</h2>
+
+![image](https://github.com/Malachite01/apiRestBlog/assets/112857106/99dd3a36-e27a-40f1-ae59-9ce835ee5a04)
+
+![image](https://github.com/Malachite01/apiRestBlog/assets/112857106/f50a68e0-e136-4baf-8007-7ee0e940304c)
+
+![image](https://github.com/Malachite01/apiRestBlog/assets/112857106/ffd5d584-4ea5-44ac-976a-d882c88b60fc)
+
+
+
 <br><b><i>par Antunes Mathieu, Trochel Paul, groupe C</i></b>
